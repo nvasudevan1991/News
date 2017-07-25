@@ -2,33 +2,28 @@ package com.project.registration;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
+import com.mysql.fabric.xmlrpc.base.Array;
 import com.mysql.jdbc.Connection;
 //import java.sql.PreparedStatement;
 import com.mysql.jdbc.PreparedStatement;
+
 public class Access {
-	public ArrayList<Registration> getDetails(Connection con) throws SQLException {
-		ArrayList<Registration> details = new ArrayList<Registration>();
-		PreparedStatement statement = (PreparedStatement) con.prepareStatement("SELECT * FROM registrationdetails");
+	public String getDetails(Connection con, String str3, String str4) throws SQLException {
+		String fname = null ,lname = null,fullName = null;
+		String findTableSQL = "SELECT fname,lname,gender FROM registrationdetails WHERE Email= ? AND password = ?" ;
+		PreparedStatement statement = (PreparedStatement) con.prepareStatement(findTableSQL);
+		statement.setString(1, str3.toString());
+		statement.setString(2, str4.toString());
 		ResultSet r = statement.executeQuery();
-		System.out.println(r);
-		try {
-			while (r.next()) {
-				Registration value = new Registration();
-				value.setfirstName(r.getString("fname"));
-				value.setlastName(r.getString("lname"));
-				value.setEmail(r.getString("Email"));
-				value.setPassword(r.getString("password"));
-				value.setConfirmPassword(r.getString("confirmpassword"));
-				value.setMobile(r.getString("mobile"));
-				value.setGender(r.getString("gender"));
-				details.add(value);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		while(r.next()){
+			
+		fname = r.getString(1);
+		lname = r.getString(2);
 		}
-		return details;
+		fullName = fname + " " + lname;
+		
+		return fullName ;
 	}
 
 	public void addDetails(Connection con, Registration d) throws SQLException {

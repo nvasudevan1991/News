@@ -2,6 +2,7 @@ package com.project.service;
 
 import java.util.ArrayList;
 
+import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -9,7 +10,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.UriBuilder;
 
 import com.google.gson.Gson;
 import com.project.registration.AccessManager;
@@ -17,24 +21,29 @@ import com.project.registration.Registration;
 
 @Path("getUsers")
 public class RegistrationService {
-	
-	@GET
+
+	@POST
 	@Path("users")
 	@Produces("application/json")
-	public String users() {
+	public Response users(@FormParam("loginemail") String email, @FormParam("loginpass") String password) {
 		String users = null;
-		ArrayList<Registration> details = new ArrayList<Registration>();
+
 		try {
-			details = new AccessManager().getDetails();
+			users = new AccessManager().getDetails(email, password);
 			Gson gson = new Gson();
-			users = gson.toJson(details);
+			users = gson.toJson(users);
+			if (!users.contains("null null")) {
+				String json = users;
+				return Response.ok(json, MediaType.APPLICATION_JSON).build();
+			} else 
+				
+				return Response.status(Response.Status.BAD_REQUEST).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return users;
+		return Response.ok().build();
+
 	}
-	
-	
 
 	@Path("createuser")
 	@POST
@@ -88,5 +97,5 @@ public class RegistrationService {
 		}
 		return response;
 	}
-}
 
+}
