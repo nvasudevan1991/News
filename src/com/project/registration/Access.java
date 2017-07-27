@@ -10,8 +10,8 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class Access {
 	public String getDetails(Connection con, String str3, String str4) throws SQLException {
-		String fname = null ,lname = null,fullName = null;
-		String findTableSQL = "SELECT fname,lname,gender FROM registrationdetails WHERE Email= ? AND password = ?" ;
+		String fname = null ,lname = null,fullName = null,Email=null;
+		String findTableSQL = "SELECT fname,lname,Email FROM registrationdetails WHERE Email= ? AND password = ?" ;
 		PreparedStatement statement = (PreparedStatement) con.prepareStatement(findTableSQL);
 		statement.setString(1, str3.toString());
 		statement.setString(2, str4.toString());
@@ -20,6 +20,7 @@ public class Access {
 			
 		fname = r.getString(1);
 		lname = r.getString(2);
+		Email = r.getString(3);
 		}
 		fullName = fname + " " + lname;
 		
@@ -44,7 +45,6 @@ public class Access {
 	public void updateDetails(Connection con, String str1,String str2,String str3) throws SQLException {
 		String insertTableSQL = "UPDATE registrationdetails SET password = ?, confirmpassword = ? WHERE Email = ?";
 		PreparedStatement prep = (PreparedStatement) con.prepareStatement(insertTableSQL);
-		System.out.println(str1 + str2 +str3 );
 		prep.setString(1, str2.toString());
 		prep.setString(2, str3.toString());
 		prep.setString(3,str1.toString());
