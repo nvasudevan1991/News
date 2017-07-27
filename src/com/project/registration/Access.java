@@ -41,12 +41,13 @@ public class Access {
 		prep.executeUpdate();
 	}
 
-	public void updateDetails(Connection con, Registration d) throws SQLException {
+	public void updateDetails(Connection con, String str1,String str2,String str3) throws SQLException {
 		String insertTableSQL = "UPDATE registrationdetails SET password = ?, confirmpassword = ? WHERE Email = ?";
 		PreparedStatement prep = (PreparedStatement) con.prepareStatement(insertTableSQL);
-		prep.setString(1, d.getEmail().toString());
-		prep.setString(2, d.getPassword().toString());
-		prep.setString(3, d.getConfirmpassword().toString());
+		System.out.println(str1 + str2 +str3 );
+		prep.setString(1, str2.toString());
+		prep.setString(2, str3.toString());
+		prep.setString(3,str1.toString());
 		prep.executeUpdate();
 	}
 }

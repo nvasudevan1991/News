@@ -78,24 +78,21 @@ public class RegistrationService {
 	@Path("changePassword")
 	@POST
 	@Produces("application/x-www-form-urlencoded")
-	public String updatePassword(@FormParam("Email") String Email, @FormParam("password") String password,
-			@FormParam("confirmpassword") String confirmpassword) {
+	public void updatePassword(@FormParam("changeemail") String Email,@FormParam("currentpassword") String currentPassword,
+			@FormParam("newpassword") String confirmpassword) {
 		String response = "";
-		Registration d = new Registration();
+		//Registration d = new Registration();
 		try {
-			d.setEmail(Email);
-			d.setPassword(password);
-			d.setConfirmPassword(confirmpassword);
+			new AccessManager().modifyDetails(Email,confirmpassword,confirmpassword);
 			Gson gson = new Gson();
-			new AccessManager().modifyDetails(d);
-			response = gson.toJson(d);
+			response = gson.toJson(response);
 		} catch (Exception er) {
 			er.printStackTrace();
 			String etat = "ECHEC";
 			Gson gson = new Gson();
 			response = gson.toJson(etat);
 		}
-		return response;
+		
 	}
 
 }

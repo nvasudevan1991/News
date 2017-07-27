@@ -9,13 +9,14 @@ public class Registration {
 	private String confirmPassword;
 	private String mobile;
 	private String gender;
+	private String newpassword;
 
 	public Registration() {
 
 	}
 
 	public Registration(String firstName, String lastname, String email, String password, String confirmPassword,
-			String mobile, String gender) {
+			String mobile, String gender ,String newpassword ) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastname;
@@ -24,6 +25,7 @@ public class Registration {
 		this.confirmPassword = confirmPassword;
 		this.mobile = mobile;
 		this.gender = gender;
+		this.newpassword =newpassword;
 	}
 
 	public String getfirstName() {
@@ -80,6 +82,7 @@ public class Registration {
 	public void setGender(String gender){
 		this.gender=gender;
 	}
+
 @Override
 	public String toString(){
 	

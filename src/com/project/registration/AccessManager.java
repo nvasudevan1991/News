@@ -26,10 +26,12 @@ public class AccessManager {
 		access.addDetails(con, d);
 	}
 
-	public void modifyDetails(Registration d) throws Exception {
+	public void modifyDetails(String email,String password , String newpassword) throws Exception {
+		//String details = null;
 		Database db = new Database();
 		Connection con = db.getConnection();
-		access.updateDetails(con, d);
+		access.updateDetails(con, email,password,newpassword);
+		
 	}
 
 }
