@@ -2,11 +2,11 @@ package com.project.registration;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.sql.Connection;
 
 import com.mysql.fabric.xmlrpc.base.Array;
-import com.mysql.jdbc.Connection;
-//import java.sql.PreparedStatement;
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.PreparedStatement;
 
 public class Access {
 	public String getDetails(Connection con, String str3, String str4) throws SQLException {
@@ -49,5 +49,89 @@ public class Access {
 		prep.setString(2, str3.toString());
 		prep.setString(3,str1.toString());
 		prep.executeUpdate();
+	}
+	public  ArrayList<LocalNews> getNews(Connection con ) throws SQLException
+	{
+		ArrayList<LocalNews> localNewsList = new ArrayList<LocalNews>();
+		String localnewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY date DESC";
+		PreparedStatement stmt = con.prepareStatement(localnewsQuery);
+		stmt.setString(1, "LocalNews");
+		ResultSet rs =stmt.executeQuery();
+		try
+		{
+			while(rs.next())
+			{
+				LocalNews l =new LocalNews();
+				l.setId(rs.getInt("S.No"));
+				l.setCategory(rs.getString("Category"));
+				l.setData(rs.getString("Data"));
+				l.setHeadlines(rs.getString("Headlines"));
+				l.setDate(rs.getDate("date"));
+				l.setImage(rs.getString("Image"));
+				l.setVideo(rs.getString("Video"));
+				l.setUrl(rs.getString("Url"));
+				localNewsList.add(l);
+			}
+		}catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return localNewsList;
+	}
+	public  ArrayList<LocalNews> getsportsNews(Connection con ) throws SQLException
+	{
+		ArrayList<LocalNews> sportsNewsList = new ArrayList<LocalNews>();
+		String sportsNewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY date DESC";
+		PreparedStatement stmt = con.prepareStatement(sportsNewsQuery);
+		stmt.setString(1, "SportsNews");
+		ResultSet rs =stmt.executeQuery();
+		try
+		{
+			while(rs.next())
+			{
+				LocalNews l =new LocalNews();
+				l.setId(rs.getInt("S.No"));
+				l.setCategory(rs.getString("Category"));
+				l.setData(rs.getString("Data"));
+				l.setHeadlines(rs.getString("Headlines"));
+				l.setDate(rs.getDate("date"));
+				l.setImage(rs.getString("Image"));
+				l.setVideo(rs.getString("Video"));
+				l.setUrl(rs.getString("Url"));
+				sportsNewsList.add(l);
+			}
+		}catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return sportsNewsList;
+	}
+	public  ArrayList<LocalNews> getWorldNews(Connection con ) throws SQLException
+	{
+		String worldNewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY date DESC";
+		ArrayList<LocalNews> worldNewsList = new ArrayList<LocalNews>();
+		PreparedStatement stmt = con.prepareStatement(worldNewsQuery);
+		stmt.setString(1, "WorldNews");
+		ResultSet rs =stmt.executeQuery();
+		try
+		{
+			while(rs.next())
+			{
+				LocalNews l =new LocalNews();
+				l.setId(rs.getInt("S.No"));
+				l.setCategory(rs.getString("Category"));
+				l.setData(rs.getString("Data"));
+				l.setHeadlines(rs.getString("Headlines"));
+				l.setDate(rs.getDate("date"));
+				l.setImage(rs.getString("Image"));
+				l.setVideo(rs.getString("Video"));
+				l.setUrl(rs.getString("Url"));
+				worldNewsList.add(l);
+			}
+		}catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return worldNewsList;
 	}
 }
