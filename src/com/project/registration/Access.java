@@ -66,7 +66,7 @@ public class Access {
 				l.setCategory(rs.getString("Category"));
 				l.setData(rs.getString("Data"));
 				l.setHeadlines(rs.getString("Headlines"));
-				l.setDate(rs.getDate("date"));
+				l.setDate(rs.getString("date"));
 				l.setImage(rs.getString("Image"));
 				l.setVideo(rs.getString("Video"));
 				l.setUrl(rs.getString("Url"));
@@ -94,7 +94,7 @@ public class Access {
 				l.setCategory(rs.getString("Category"));
 				l.setData(rs.getString("Data"));
 				l.setHeadlines(rs.getString("Headlines"));
-				l.setDate(rs.getDate("date"));
+				l.setDate(rs.getString("date"));
 				l.setImage(rs.getString("Image"));
 				l.setVideo(rs.getString("Video"));
 				l.setUrl(rs.getString("Url"));
@@ -122,7 +122,7 @@ public class Access {
 				l.setCategory(rs.getString("Category"));
 				l.setData(rs.getString("Data"));
 				l.setHeadlines(rs.getString("Headlines"));
-				l.setDate(rs.getDate("date"));
+				l.setDate(rs.getString("date"));
 				l.setImage(rs.getString("Image"));
 				l.setVideo(rs.getString("Video"));
 				l.setUrl(rs.getString("Url"));

@@ -11,14 +11,14 @@ public class LocalNews {
 	private String Url;
 	private String image;
 	private String video;
-	private Date date;
+	private String date;
 	private String category;
 	
 	public LocalNews()
 	{
 		
 	}
-	public LocalNews(int id,String Headlines,String Url,String image,String video,Date date,String category,String Data)
+	public LocalNews(int id,String Headlines,String Url,String image,String video,String date,String category,String Data)
 	{
 		super();
 		this.id =id;
@@ -76,10 +76,10 @@ public class LocalNews {
 	{
 		this.video = video;
 	}
-	public Date getDate(){
+	public String getDate(){
 		return date;
 	}
-	public void setDate(Date date)
+	public void setDate(String date)
 	{
 		this.date = date;
 	}
