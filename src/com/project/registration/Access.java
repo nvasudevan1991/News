@@ -53,7 +53,7 @@ public class Access {
 	public  ArrayList<LocalNews> getNews(Connection con ) throws SQLException
 	{
 		ArrayList<LocalNews> localNewsList = new ArrayList<LocalNews>();
-		String localnewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY date DESC";
+		String localnewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY 'S.No' DESC";
 		PreparedStatement stmt = con.prepareStatement(localnewsQuery);
 		stmt.setString(1, "LocalNews");
 		ResultSet rs =stmt.executeQuery();
@@ -81,7 +81,7 @@ public class Access {
 	public  ArrayList<LocalNews> getsportsNews(Connection con ) throws SQLException
 	{
 		ArrayList<LocalNews> sportsNewsList = new ArrayList<LocalNews>();
-		String sportsNewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY date DESC";
+		String sportsNewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY 'S.No' DESC";
 		PreparedStatement stmt = con.prepareStatement(sportsNewsQuery);
 		stmt.setString(1, "SportsNews");
 		ResultSet rs =stmt.executeQuery();
@@ -108,7 +108,7 @@ public class Access {
 	}
 	public  ArrayList<LocalNews> getWorldNews(Connection con ) throws SQLException
 	{
-		String worldNewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY date DESC";
+		String worldNewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY 'S.No' DESC";
 		ArrayList<LocalNews> worldNewsList = new ArrayList<LocalNews>();
 		PreparedStatement stmt = con.prepareStatement(worldNewsQuery);
 		stmt.setString(1, "WorldNews");
