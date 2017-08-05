@@ -83,7 +83,7 @@ public class Access {
 		ArrayList<LocalNews> sportsNewsList = new ArrayList<LocalNews>();
 		String sportsNewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY 'S.No' DESC";
 		PreparedStatement stmt = con.prepareStatement(sportsNewsQuery);
-		stmt.setString(1, "SportsNews");
+		stmt.setString(1, "PoliticsNews");
 		ResultSet rs =stmt.executeQuery();
 		try
 		{

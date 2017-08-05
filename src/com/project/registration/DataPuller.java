@@ -22,6 +22,7 @@ public class DataPuller {
 		DataPuller d = new DataPuller();
 		Connection con = null;
 		con = (Connection) DriverManager.getConnection(connectionURL, "root", "root");
+
 		ArrayList<String> LocalYahooHeadlines = d.yahooLocalNewsHeadlines();
 		ArrayList<String> LocalYahooUrl = d.yahooLocalNewsUrl();
 		ArrayList<String> LocalYahooImageUrl = d.yahooLocalImageUrl();
@@ -30,10 +31,23 @@ public class DataPuller {
 		ArrayList<String> WorldYahooUrl = d.yahooWorldNewsUrl();
 		ArrayList<String> WorldYahooImageUrl = d.yahooWorldImageUrl();
 		ArrayList<String> WorldYahooData = d.yahooWorldNewsdata();
-		ArrayList<String> SportsYahooHeadlines = d.yahooSportsNewsHeadlines();
-		ArrayList<String> SportsYahooUrl = d.yahooSportsNewsUrl();
-		ArrayList<String> SportsYahooImageUrl = d.yahooSportsImageUrl();
-		ArrayList<String> SportsYahooData = d.yahooSportsNewsdata();
+		ArrayList<String> PoliticsYahooHeadlines = d.yahooPoliticsNewsHeadlines();
+		ArrayList<String> PoliticsYahooUrl = d.yahooPoliticsNewsUrl();
+		ArrayList<String> PoliticsYahooImageUrl = d.yahooPoliticsImageUrl();
+		ArrayList<String> PoliticsYahooData = d.yahooPoliticsNewsdata();
+		ArrayList<String> LocalYorkHeadlines = d.yorkLocalNewsHeadlines();
+		ArrayList<String> LocalYorkUrl = d.yorkLocalNewsUrl();
+		ArrayList<String> LocalYorkImageUrl = d.yorkLocalImageUrl();
+		ArrayList<String> LocalYorkData = d.yorkLocalNewsdata();
+		ArrayList<String> WorldYorkHeadlines = d.yorkWorldNewsHeadlines();
+		ArrayList<String> WorldYorkUrl = d.yorkWorldNewsUrl();
+		ArrayList<String> WorldYorkImageUrl = d.yorkWorldImageUrl();
+		ArrayList<String> WorldYorkData = d.yorkWorldNewsdata();
+		ArrayList<String> PoliticsYorkHeadlines = d.yorkPoliticsNewsHeadlines();
+		ArrayList<String> PoliticsYorkUrl = d.yorkPoliticsNewsUrl();
+		ArrayList<String> PoliticsYorkImageUrl = d.yorkPoliticsImageUrl();
+		ArrayList<String> PoliticsYorkData = d.yorkPoliticsNewsdata();
+
 		for (int i = 0; i < LocalYahooHeadlines.size(); i++) {
 			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
@@ -89,10 +103,10 @@ public class DataPuller {
 
 			}
 		}
-		for (int i = 0; i < SportsYahooHeadlines.size(); i++) {
+		for (int i = 0; i < PoliticsYahooHeadlines.size(); i++) {
 			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
-			stmt.setString(1, SportsYahooHeadlines.get(i).toString());
+			stmt.setString(1, PoliticsYahooHeadlines.get(i).toString());
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				int count = rs.getInt(1);
@@ -102,13 +116,100 @@ public class DataPuller {
 					String insertTableSQL = "INSERT INTO newsdata"
 							+ "(Headlines, Url, Image, Video, date, Category, data) VALUES" + "(?,?,?,?,?,?,?)";
 					PreparedStatement prep = (PreparedStatement) con.prepareStatement(insertTableSQL);
-					prep.setString(1, SportsYahooHeadlines.get(i).toString());
-					prep.setString(2, SportsYahooUrl.get(i).toString());
-					prep.setString(3, SportsYahooImageUrl.get(i).toString());
+					prep.setString(1, PoliticsYahooHeadlines.get(i).toString());
+					prep.setString(2, PoliticsYahooUrl.get(i).toString());
+					prep.setString(3, PoliticsYahooImageUrl.get(i).toString());
 					prep.setString(4, "null");
 					prep.setString(5, "null");
-					prep.setString(6, "SportsNews");
-					prep.setString(7, SportsYahooData.get(i).toString());
+					prep.setString(6, "PoliticsNews");
+					prep.setString(7, PoliticsYahooData.get(i).toString());
+
+					prep.executeUpdate();
+
+				}
+
+			}
+
+		}
+
+		for (int i = 0; i < LocalYorkHeadlines.size(); i++) {
+			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
+			PreparedStatement stmt = con.prepareStatement(checkContent);
+			stmt.setString(1, LocalYorkHeadlines.get(i).toString());
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				int count = rs.getInt(1);
+
+				if (count == 0)
+
+				{
+					String insertTableSQL = "INSERT INTO newsdata"
+							+ "(Headlines, Url, Image, Video, date, Category, data) VALUES" + "(?,?,?,?,?,?,?)";
+					PreparedStatement prep = (PreparedStatement) con.prepareStatement(insertTableSQL);
+					prep.setString(1, LocalYorkHeadlines.get(i).toString());
+					prep.setString(2, LocalYorkUrl.get(i).toString());
+					prep.setString(3, LocalYorkImageUrl.get(i).toString());
+					prep.setString(4, "null");
+					prep.setString(5, "null");
+					prep.setString(6, "LocalNews");
+					prep.setString(7, LocalYorkData.get(i).toString());
+
+					prep.executeUpdate();
+
+				}
+
+			}
+		}
+		for (int i = 0; i < WorldYorkHeadlines.size(); i++) {
+			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
+			PreparedStatement stmt = con.prepareStatement(checkContent);
+			stmt.setString(1, WorldYorkHeadlines.get(i).toString());
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				int count = rs.getInt(1);
+
+				if (count == 0)
+
+				{
+					String insertTableSQL = "INSERT INTO newsdata"
+							+ "(Headlines, Url, Image, Video, date, Category, data) VALUES" + "(?,?,?,?,?,?,?)";
+					PreparedStatement prep = (PreparedStatement) con.prepareStatement(insertTableSQL);
+					prep.setString(1, WorldYorkHeadlines.get(i).toString());
+					prep.setString(2, WorldYorkUrl.get(i).toString());
+					prep.setString(3, WorldYorkImageUrl.get(i).toString());
+					prep.setString(4, "null");
+					prep.setString(5, "null");
+					prep.setString(6, "WorldNews");
+					prep.setString(7, WorldYorkData.get(i).toString());
+
+					prep.executeUpdate();
+
+				}
+
+			}
+		}
+
+		for (int i = 0; i < PoliticsYorkHeadlines.size(); i++) {
+			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
+			PreparedStatement stmt = con.prepareStatement(checkContent);
+			stmt.setString(1, PoliticsYorkHeadlines.get(i).toString());
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				int count = rs.getInt(1);
+
+				if (count == 0)
+
+				{
+					String insertTableSQL = "INSERT INTO newsdata"
+							+ "(Headlines, Url, Image, Video, date, Category, data) VALUES" + "(?,?,?,?,?,?,?)";
+					PreparedStatement prep = (PreparedStatement) con.prepareStatement(insertTableSQL);
+					prep.setString(1, PoliticsYorkHeadlines.get(i).toString());
+					prep.setString(2, PoliticsYorkUrl.get(i).toString());
+					prep.setString(3, PoliticsYorkImageUrl.get(i).toString());
+					prep.setString(4, "null");
+					prep.setString(5, "null");
+					prep.setString(6, "PoliticsNews");
+					prep.setString(7, PoliticsYorkData.get(i).toString());
 
 					prep.executeUpdate();
 
@@ -259,74 +360,283 @@ public class DataPuller {
 		return worldData;
 	}
 
-	public ArrayList<String> yahooSportsNewsHeadlines() {
+	public ArrayList<String> yahooPoliticsNewsHeadlines() {
 
-		ArrayList<String> SportsHeadlines = new ArrayList<>();
+		ArrayList<String> PoliticsHeadlines = new ArrayList<>();
 		try {
-			Document document = Jsoup.connect("https://sports.yahoo.com/").get();
+			Document document = Jsoup.connect("https://www.yahoo.com/news/politics/").get();
 			Elements HeadLines = document.getElementsByClass("Mb(5px)").select("a");
 			for (Element f : HeadLines) {
-				SportsHeadlines.add(f.text());
+				PoliticsHeadlines.add(f.text());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return SportsHeadlines;
+		return PoliticsHeadlines;
 	}
 
-	public ArrayList<String> yahooSportsNewsUrl() {
-		ArrayList<String> sportsUrl = new ArrayList<>();
+	public ArrayList<String> yahooPoliticsNewsUrl() {
+		ArrayList<String> PoliticsUrl = new ArrayList<>();
 		try {
-			Document doc = Jsoup.connect("https://sports.yahoo.com/").get();
+			Document doc = Jsoup.connect("https://www.yahoo.com/news/politics/").get();
 			Elements url = doc.getElementsByClass("Mb(5px)").select("a");
 			for (Element e : url) {
-				sportsUrl.add(e.attr("abs:href"));
+				PoliticsUrl.add(e.attr("abs:href"));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return sportsUrl;
+		return PoliticsUrl;
 
 	}
 
-	public ArrayList<String> yahooSportsImageUrl() {
+	public ArrayList<String> yahooPoliticsImageUrl() {
 
-		ArrayList<String> sportsImageUrl = new ArrayList<>();
+		ArrayList<String> PoliticsImageUrl = new ArrayList<>();
 		try {
-			Document doc = Jsoup.connect("https://sports.yahoo.com/").get();
+			Document doc = Jsoup.connect("https://www.yahoo.com/news/politics/").get();
 			Elements imageUrl = doc.getElementsByClass("Cf");
 			for (Element g : imageUrl) {
 				if (g.getElementsByTag("img").isEmpty() == false) {
 
-					sportsImageUrl.add(g.select("img").attr("abs:src"));
+					PoliticsImageUrl.add(g.select("img").attr("abs:src"));
 
 				} else {
-					sportsImageUrl.add("null");
+					PoliticsImageUrl.add("null");
 				}
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return sportsImageUrl;
+		return PoliticsImageUrl;
 	}
 
-	public ArrayList<String> yahooSportsNewsdata() {
-		ArrayList<String> sportsData = new ArrayList<>();
+	public ArrayList<String> yahooPoliticsNewsdata() {
+		ArrayList<String> PoliticsData = new ArrayList<>();
 		try {
-			Document doc = Jsoup.connect("https://sports.yahoo.com/").get();
+			Document doc = Jsoup.connect("https://www.yahoo.com/news/politics/").get();
 			Elements data = doc.getElementsByClass("Cf").select("p");
 			for (Element h : data) {
 				if (!h.select("p").text().isEmpty())
-					sportsData.add(h.select("p").text());
+					PoliticsData.add(h.select("p").text());
 				else
-					sportsData.add("null");
+					PoliticsData.add("null");
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return sportsData;
+		return PoliticsData;
 	}
 
+	public ArrayList<String> yorkLocalNewsHeadlines() {
+
+		ArrayList<String> LocalHeadlines = new ArrayList<>();
+		try {
+			Document document = Jsoup.connect("https://www.nytimes.com/section/us").get();
+			Elements HeadLines = document.getElementsByClass("story-meta").select("h2");
+			for (Element f : HeadLines) {
+				LocalHeadlines.add(f.text());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return LocalHeadlines;
+	}
+
+	public ArrayList<String> yorkLocalNewsUrl() {
+		ArrayList<String> LocalUrl = new ArrayList<>();
+		try {
+			Document doc = Jsoup.connect("https://www.nytimes.com/section/us").get();
+			Elements url = doc.getElementsByClass("story-link").select("a");
+			for (Element e : url) {
+				LocalUrl.add(e.attr("abs:href"));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return LocalUrl;
+
+	}
+
+	public ArrayList<String> yorkLocalImageUrl() {
+
+		ArrayList<String> LocalImageUrl = new ArrayList<>();
+		try {
+			Document doc = Jsoup.connect("https://www.nytimes.com/section/us").get();
+			Elements imageUrl = doc.getElementsByClass("story-link");
+			for (Element g : imageUrl) {
+				if (g.getElementsByTag("img").isEmpty() == false) {
+
+					LocalImageUrl.add(g.select("img").attr("abs:src"));
+
+				} else {
+					LocalImageUrl.add("null");
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return LocalImageUrl;
+	}
+
+	public ArrayList<String> yorkLocalNewsdata() {
+		ArrayList<String> LocalData = new ArrayList<>();
+		try {
+			Document doc = Jsoup.connect("https://www.nytimes.com/section/us").get();
+			Elements data = doc.getElementsByClass("story-meta");
+			for (Element h : data) {
+				if (!h.getElementsByClass("summary").select("p").text().isEmpty())
+					LocalData.add(h.select("p").text());
+				else
+					LocalData.add("null");
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return LocalData;
+	}
+
+	public ArrayList<String> yorkWorldNewsHeadlines() {
+
+		ArrayList<String> WorldHeadlines = new ArrayList<>();
+		try {
+			Document document = Jsoup.connect("https://www.nytimes.com/section/world").get();
+			Elements HeadLines = document.getElementsByClass("story-meta").select("h2");
+			for (Element f : HeadLines) {
+				WorldHeadlines.add(f.text());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return WorldHeadlines;
+	}
+
+	public ArrayList<String> yorkWorldNewsUrl() {
+		ArrayList<String> WorldUrl = new ArrayList<>();
+		try {
+			Document doc = Jsoup.connect("https://www.nytimes.com/section/world").get();
+			Elements url = doc.getElementsByClass("story-link").select("a");
+			for (Element e : url) {
+				WorldUrl.add(e.attr("abs:href"));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return WorldUrl;
+
+	}
+
+	public ArrayList<String> yorkWorldImageUrl() {
+
+		ArrayList<String> WorldImageUrl = new ArrayList<>();
+		try {
+			Document doc = Jsoup.connect("https://www.nytimes.com/section/world").get();
+			Elements imageUrl = doc.getElementsByClass("story-link");
+			for (Element g : imageUrl) {
+				if (g.getElementsByTag("img").isEmpty() == false) {
+
+					WorldImageUrl.add(g.select("img").attr("abs:src"));
+
+				} else {
+					WorldImageUrl.add("null");
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return WorldImageUrl;
+	}
+
+	public ArrayList<String> yorkWorldNewsdata() {
+		ArrayList<String> WorldData = new ArrayList<>();
+		try {
+			Document doc = Jsoup.connect("https://www.nytimes.com/section/world").get();
+			Elements data = doc.getElementsByClass("story-meta");
+			for (Element h : data) {
+				if (!h.getElementsByClass("summary").select("p").text().isEmpty())
+					WorldData.add(h.select("p").text());
+				else
+					WorldData.add("null");
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return WorldData;
+	}
+
+	public ArrayList<String> yorkPoliticsNewsHeadlines() {
+
+		ArrayList<String> PoliticsHeadlines = new ArrayList<>();
+		try {
+			Document document = Jsoup.connect("https://www.nytimes.com/section/politics").get();
+			Elements HeadLines = document.getElementsByClass("story-meta").select("h2");
+			for (Element f : HeadLines) {
+				PoliticsHeadlines.add(f.text());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return PoliticsHeadlines;
+	}
+
+	public ArrayList<String> yorkPoliticsNewsUrl() {
+		ArrayList<String> PoliticsUrl = new ArrayList<>();
+		try {
+			Document doc = Jsoup.connect("https://www.nytimes.com/section/politics").get();
+			Elements url = doc.getElementsByClass("story-link").select("a");
+			for (Element e : url) {
+				PoliticsUrl.add(e.attr("abs:href"));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return PoliticsUrl;
+
+	}
+
+	public ArrayList<String> yorkPoliticsImageUrl() {
+
+		ArrayList<String> PoliticsImageUrl = new ArrayList<>();
+		try {
+			Document doc = Jsoup.connect("https://www.nytimes.com/section/politics").get();
+			Elements imageUrl = doc.getElementsByClass("story-link");
+			for (Element g : imageUrl) {
+				if (g.getElementsByTag("img").isEmpty() == false) {
+
+					PoliticsImageUrl.add(g.select("img").attr("abs:src"));
+
+				} else {
+					PoliticsImageUrl.add("null");
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return PoliticsImageUrl;
+	}
+
+	public ArrayList<String> yorkPoliticsNewsdata() {
+		ArrayList<String> PoliticsData = new ArrayList<>();
+		try {
+			Document doc = Jsoup.connect("https://www.nytimes.com/section/politics").get();
+			Elements data = doc.getElementsByClass("story-meta");
+			for (Element h : data) {
+				if (!h.getElementsByClass("summary").select("p").text().isEmpty())
+					PoliticsData.add(h.select("p").text());
+				else
+					PoliticsData.add("null");
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return PoliticsData;
+	}
 }
