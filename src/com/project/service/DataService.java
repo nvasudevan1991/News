@@ -2,7 +2,9 @@ package com.project.service;
 
 import java.util.ArrayList;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
@@ -16,56 +18,72 @@ public class DataService {
 	@GET
 	@Path("localnews")
 	@Produces("application/json")
-	public String localNewsData()
-	{
+	public String localNewsData() {
 		String localNews = null;
 		ArrayList<LocalNews> localNewsList = new ArrayList<LocalNews>();
 		try {
 			localNewsList = new NewsManager().getNews();
 			Gson gson = new Gson();
 			localNews = gson.toJson(localNewsList);
-			
-		}catch (Exception e)
-		{
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return localNews;
 	}
-	
+
 	@GET
 	@Path("worldnews")
 	@Produces("application/json")
-	public String worldNewsData()
-	{
+	public String worldNewsData() {
 		String worldNews = null;
 		ArrayList<LocalNews> worldNewsList = new ArrayList<LocalNews>();
 		try {
 			worldNewsList = new NewsManager().getWorldNews();
 			Gson gson = new Gson();
 			worldNews = gson.toJson(worldNewsList);
-			
-		}catch (Exception e)
-		{
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return worldNews;
 	}
+
 	@GET
 	@Path("sportsnews")
 	@Produces("application/json")
-	public String sportsNewsData()
-	{
+	public String sportsNewsData() {
 		String sportsNews = null;
 		ArrayList<LocalNews> sportsNewsList = new ArrayList<LocalNews>();
 		try {
 			sportsNewsList = new NewsManager().getsportsNews();
 			Gson gson = new Gson();
 			sportsNews = gson.toJson(sportsNewsList);
-			
-		}catch (Exception e)
-		{
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return sportsNews;
 	}
+
+	@POST
+	@Path("search")
+	@Produces("application/json")
+	public String searchNewsData(@FormParam("searchcontent") String searchcontent) {
+		String search = null;
+		ArrayList<LocalNews> searchNewsList = new ArrayList<LocalNews>();
+		try {
+			searchNewsList = new NewsManager().getSearchNews(searchcontent);
+			Gson gson = new Gson();
+			search = gson.toJson(searchNewsList);
+			
+			
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return search;
+	}
+	
 }

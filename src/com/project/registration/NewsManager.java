@@ -32,4 +32,12 @@ public class NewsManager {
 		SportsNewsList = access.getsportsNews(con);
 		return SportsNewsList;
 	}
+	public ArrayList<LocalNews> getSearchNews(String searchcontent) throws Exception {
+		ArrayList<LocalNews> SearchNewsList = new ArrayList<LocalNews>();
+		Database db =new Database();
+		Connection con = db.getConnection();
+		SearchNewsList = access.getSearchNews(con,searchcontent);
+		return SearchNewsList;
+	}
 }
+

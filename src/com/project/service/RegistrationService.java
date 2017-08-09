@@ -68,9 +68,11 @@ public class RegistrationService {
 			response = gson.toJson(d);
 		} catch (Exception er) {
 			er.printStackTrace();
-			String etat = "ECHEC";
-			Gson gson = new Gson();
-			response = gson.toJson(etat);
+			String etat = "Error";
+			//Gson gson = new Gson();
+			//response = gson.toJson(etat);
+			return etat;
+			
 		}
 		return response;
 	}

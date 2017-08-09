@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
@@ -13,6 +15,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.mysql.fabric.xmlrpc.base.Array;
 import com.mysql.jdbc.Connection;
 
 public class DataPuller {
@@ -37,6 +40,7 @@ public class DataPuller {
 		ArrayList<String> PoliticsYahooData = d.yahooPoliticsNewsdata();
 		ArrayList<String> LocalYorkHeadlines = d.yorkLocalNewsHeadlines();
 		ArrayList<String> LocalYorkUrl = d.yorkLocalNewsUrl();
+		ArrayList<String> LocalYorkDate =d.yorkLocalNewsDate();
 		ArrayList<String> LocalYorkImageUrl = d.yorkLocalImageUrl();
 		ArrayList<String> LocalYorkData = d.yorkLocalNewsdata();
 		ArrayList<String> WorldYorkHeadlines = d.yorkWorldNewsHeadlines();
@@ -49,6 +53,8 @@ public class DataPuller {
 		ArrayList<String> PoliticsYorkData = d.yorkPoliticsNewsdata();
 
 		for (int i = 0; i < LocalYahooHeadlines.size(); i++) {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
 			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
 			stmt.setString(1, LocalYahooHeadlines.get(i).toString());
@@ -66,7 +72,7 @@ public class DataPuller {
 					prep.setString(2, LocalYahooUrl.get(i).toString());
 					prep.setString(3, LocalYahooImageUrl.get(i).toString());
 					prep.setString(4, "null");
-					prep.setString(5, "null");
+					prep.setString(5, dtf.format(now));
 					prep.setString(6, "LocalNews");
 					prep.setString(7, LocalYahooData.get(i).toString());
 
@@ -77,6 +83,8 @@ public class DataPuller {
 			}
 		}
 		for (int i = 0; i < WorldYahooHeadlines.size(); i++) {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
 			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
 			stmt.setString(1, WorldYahooHeadlines.get(i).toString());
@@ -93,7 +101,7 @@ public class DataPuller {
 					prep.setString(2, WorldYahooUrl.get(i).toString());
 					prep.setString(3, WorldYahooImageUrl.get(i).toString());
 					prep.setString(4, "null");
-					prep.setString(5, "null");
+					prep.setString(5, dtf.format(now));
 					prep.setString(6, "WorldNews");
 					prep.setString(7, WorldYahooData.get(i).toString());
 
@@ -104,6 +112,8 @@ public class DataPuller {
 			}
 		}
 		for (int i = 0; i < PoliticsYahooHeadlines.size(); i++) {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
 			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
 			stmt.setString(1, PoliticsYahooHeadlines.get(i).toString());
@@ -120,7 +130,7 @@ public class DataPuller {
 					prep.setString(2, PoliticsYahooUrl.get(i).toString());
 					prep.setString(3, PoliticsYahooImageUrl.get(i).toString());
 					prep.setString(4, "null");
-					prep.setString(5, "null");
+					prep.setString(5, dtf.format(now));
 					prep.setString(6, "PoliticsNews");
 					prep.setString(7, PoliticsYahooData.get(i).toString());
 
@@ -133,6 +143,8 @@ public class DataPuller {
 		}
 
 		for (int i = 0; i < LocalYorkHeadlines.size(); i++) {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
 			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
 			stmt.setString(1, LocalYorkHeadlines.get(i).toString());
@@ -150,7 +162,7 @@ public class DataPuller {
 					prep.setString(2, LocalYorkUrl.get(i).toString());
 					prep.setString(3, LocalYorkImageUrl.get(i).toString());
 					prep.setString(4, "null");
-					prep.setString(5, "null");
+					prep.setString(5, dtf.format(now));
 					prep.setString(6, "LocalNews");
 					prep.setString(7, LocalYorkData.get(i).toString());
 
@@ -161,6 +173,8 @@ public class DataPuller {
 			}
 		}
 		for (int i = 0; i < WorldYorkHeadlines.size(); i++) {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
 			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
 			stmt.setString(1, WorldYorkHeadlines.get(i).toString());
@@ -178,7 +192,7 @@ public class DataPuller {
 					prep.setString(2, WorldYorkUrl.get(i).toString());
 					prep.setString(3, WorldYorkImageUrl.get(i).toString());
 					prep.setString(4, "null");
-					prep.setString(5, "null");
+					prep.setString(5, dtf.format(now));
 					prep.setString(6, "WorldNews");
 					prep.setString(7, WorldYorkData.get(i).toString());
 
@@ -190,6 +204,8 @@ public class DataPuller {
 		}
 
 		for (int i = 0; i < PoliticsYorkHeadlines.size(); i++) {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
 			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
 			stmt.setString(1, PoliticsYorkHeadlines.get(i).toString());
@@ -207,7 +223,7 @@ public class DataPuller {
 					prep.setString(2, PoliticsYorkUrl.get(i).toString());
 					prep.setString(3, PoliticsYorkImageUrl.get(i).toString());
 					prep.setString(4, "null");
-					prep.setString(5, "null");
+					prep.setString(5, dtf.format(now));
 					prep.setString(6, "PoliticsNews");
 					prep.setString(7, PoliticsYorkData.get(i).toString());
 
@@ -459,6 +475,22 @@ public class DataPuller {
 		return LocalUrl;
 
 	}
+	
+	public ArrayList<String> yorkLocalNewsDate() {
+		ArrayList<String> LocalDate = new ArrayList<>();
+		try {
+			Document doc = Jsoup.connect("https://www.nytimes.com/section/us").get();
+			Elements Date = doc.getElementsByClass("dateline").select("time");
+			for (Element e : Date) {
+				LocalDate.add(e.attr("abs:datetime"));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return LocalDate;
+
+	}
+	
 
 	public ArrayList<String> yorkLocalImageUrl() {
 

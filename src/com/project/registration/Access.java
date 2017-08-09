@@ -53,7 +53,7 @@ public class Access {
 	public  ArrayList<LocalNews> getNews(Connection con ) throws SQLException
 	{
 		ArrayList<LocalNews> localNewsList = new ArrayList<LocalNews>();
-		String localnewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY 'S.No' DESC";
+		String localnewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC LIMIT 20";
 		PreparedStatement stmt = con.prepareStatement(localnewsQuery);
 		stmt.setString(1, "LocalNews");
 		ResultSet rs =stmt.executeQuery();
@@ -61,12 +61,13 @@ public class Access {
 		{
 			while(rs.next())
 			{
+				
 				LocalNews l =new LocalNews();
 				l.setId(rs.getInt("S.No"));
 				l.setCategory(rs.getString("Category"));
 				l.setData(rs.getString("Data"));
 				l.setHeadlines(rs.getString("Headlines"));
-				l.setDate(rs.getString("date"));
+				l.setDate(rs.getDate("date"));
 				l.setImage(rs.getString("Image"));
 				l.setVideo(rs.getString("Video"));
 				l.setUrl(rs.getString("Url"));
@@ -81,7 +82,7 @@ public class Access {
 	public  ArrayList<LocalNews> getsportsNews(Connection con ) throws SQLException
 	{
 		ArrayList<LocalNews> sportsNewsList = new ArrayList<LocalNews>();
-		String sportsNewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY 'S.No' DESC";
+		String sportsNewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC LIMIT 20";
 		PreparedStatement stmt = con.prepareStatement(sportsNewsQuery);
 		stmt.setString(1, "PoliticsNews");
 		ResultSet rs =stmt.executeQuery();
@@ -94,7 +95,7 @@ public class Access {
 				l.setCategory(rs.getString("Category"));
 				l.setData(rs.getString("Data"));
 				l.setHeadlines(rs.getString("Headlines"));
-				l.setDate(rs.getString("date"));
+				l.setDate(rs.getDate("date"));
 				l.setImage(rs.getString("Image"));
 				l.setVideo(rs.getString("Video"));
 				l.setUrl(rs.getString("Url"));
@@ -108,7 +109,7 @@ public class Access {
 	}
 	public  ArrayList<LocalNews> getWorldNews(Connection con ) throws SQLException
 	{
-		String worldNewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY 'S.No' DESC";
+		String worldNewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC LIMIT 20";
 		ArrayList<LocalNews> worldNewsList = new ArrayList<LocalNews>();
 		PreparedStatement stmt = con.prepareStatement(worldNewsQuery);
 		stmt.setString(1, "WorldNews");
@@ -122,7 +123,7 @@ public class Access {
 				l.setCategory(rs.getString("Category"));
 				l.setData(rs.getString("Data"));
 				l.setHeadlines(rs.getString("Headlines"));
-				l.setDate(rs.getString("date"));
+				l.setDate(rs.getDate("date"));
 				l.setImage(rs.getString("Image"));
 				l.setVideo(rs.getString("Video"));
 				l.setUrl(rs.getString("Url"));
@@ -133,5 +134,36 @@ public class Access {
 			e.printStackTrace();
 		}
 		return worldNewsList;
+	}
+	public  ArrayList<LocalNews> getSearchNews(Connection con,String searchcontent) throws SQLException
+	{
+		String searchNewsQuery = "SELECT * FROM newsdata WHERE Data LIKE ? ORDER BY `newsdata`.`date` DESC LIMIT 20";
+		ArrayList<LocalNews> searchNewsList = new ArrayList<LocalNews>();
+		PreparedStatement stmt = con.prepareStatement(searchNewsQuery);
+		stmt.setString(1, "%"+searchcontent.toString()+"%");
+		ResultSet rs =stmt.executeQuery();
+		System.out.println("Result Set is:" +rs);
+		System.out.println(stmt);
+		try
+		{
+			while(rs.next())
+			{
+				LocalNews l =new LocalNews();
+				l.setId(rs.getInt("S.No"));
+				l.setCategory(rs.getString("Category"));
+				l.setData(rs.getString("Data"));
+				l.setHeadlines(rs.getString("Headlines"));
+				l.setDate(rs.getDate("date"));
+				l.setImage(rs.getString("Image"));
+				l.setVideo(rs.getString("Video"));
+				l.setUrl(rs.getString("Url"));
+				searchNewsList.add(l);
+			}
+			System.out.println(searchNewsList);
+		}catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return searchNewsList;
 	}
 }
