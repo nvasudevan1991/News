@@ -2,16 +2,16 @@ package com.project.registration;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.sql.Connection;
-
-import com.mysql.fabric.xmlrpc.base.Array;
 import java.sql.PreparedStatement;
 
 public class Access {
-	public String getDetails(Connection con, String str3, String str4) throws SQLException {
-		String fname = null ,lname = null,fullName = null,Email=null;
-		String findTableSQL = "SELECT fname,lname,Email FROM registrationdetails WHERE Email= ? AND password = ?" ;
+	public String getDetails(Connection con, String str3, String str4,String str5) throws SQLException {
+		String fname = null ,lname = null,fullName = null,LogoutTime=null;
+		String findTableSQL = "SELECT fname,lname,LogoutTime FROM registrationdetails WHERE Email= ? AND password = ?" ;
 		PreparedStatement statement = (PreparedStatement) con.prepareStatement(findTableSQL);
 		statement.setString(1, str3.toString());
 		statement.setString(2, str4.toString());
@@ -20,8 +20,9 @@ public class Access {
 			
 		fname = r.getString(1);
 		lname = r.getString(2);
-		Email = r.getString(3);
+		LogoutTime = r.getString(3);
 		}
+		System.out.println(LogoutTime);
 		fullName = fname + " " + lname;
 		
 		return fullName ;
@@ -50,6 +51,16 @@ public class Access {
 		prep.setString(3,str1.toString());
 		prep.executeUpdate();
 	}
+	public void updateLogoutDetails(Connection con, String str1,String str2) throws SQLException {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		String insertTableSQL = "UPDATE registrationdetails SET LogoutTime = ? WHERE fname = ? AND lname = ?";
+		PreparedStatement prep = (PreparedStatement) con.prepareStatement(insertTableSQL);
+		prep.setString(1, dtf.format(now));
+		prep.setString(2, str1.toString());
+		prep.setString(3,str2.toString());
+		prep.executeUpdate();
+	}
 	public  ArrayList<LocalNews> getNews(Connection con ) throws SQLException
 	{
 		ArrayList<LocalNews> localNewsList = new ArrayList<LocalNews>();
@@ -69,7 +80,6 @@ public class Access {
 				l.setHeadlines(rs.getString("Headlines"));
 				l.setDate(rs.getDate("date"));
 				l.setImage(rs.getString("Image"));
-				l.setVideo(rs.getString("Video"));
 				l.setUrl(rs.getString("Url"));
 				localNewsList.add(l);
 			}
@@ -97,7 +107,6 @@ public class Access {
 				l.setHeadlines(rs.getString("Headlines"));
 				l.setDate(rs.getDate("date"));
 				l.setImage(rs.getString("Image"));
-				l.setVideo(rs.getString("Video"));
 				l.setUrl(rs.getString("Url"));
 				sportsNewsList.add(l);
 			}
@@ -125,7 +134,6 @@ public class Access {
 				l.setHeadlines(rs.getString("Headlines"));
 				l.setDate(rs.getDate("date"));
 				l.setImage(rs.getString("Image"));
-				l.setVideo(rs.getString("Video"));
 				l.setUrl(rs.getString("Url"));
 				worldNewsList.add(l);
 			}
@@ -155,7 +163,6 @@ public class Access {
 				l.setHeadlines(rs.getString("Headlines"));
 				l.setDate(rs.getDate("date"));
 				l.setImage(rs.getString("Image"));
-				l.setVideo(rs.getString("Video"));
 				l.setUrl(rs.getString("Url"));
 				searchNewsList.add(l);
 			}

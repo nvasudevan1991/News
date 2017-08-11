@@ -25,11 +25,11 @@ public class RegistrationService {
 	@POST
 	@Path("users")
 	@Produces("application/json")
-	public Response users(@FormParam("loginemail") String email, @FormParam("loginpass") String password) {
+	public Response users(@FormParam("loginemail") String email, @FormParam("loginpass") String password,String LastLogout) {
 		String users = null;
 
 		try {
-			users = new AccessManager().getDetails(email, password);
+			users = new AccessManager().getDetails(email, password,LastLogout);
 			Gson gson = new Gson();
 			users = gson.toJson(users);
 			if (!users.contains("null null")) {
@@ -96,5 +96,23 @@ public class RegistrationService {
 		}
 		
 	}
+	
+	@Path("logoutdetails")
+	@POST
+	@Produces("application/x-www-form-urlencoded")
+	public void updateLogoutTime(@FormParam("fname") String fname, @FormParam("lname") String lname){	
+	String response = " ";
+	try {
+		new AccessManager().changeLogout(fname, lname);
+		Gson gson = new Gson();
+		response = gson.toJson(response);
+	}catch (Exception er) {
+		er.printStackTrace();
+		String etat = "ECHEC";
+		Gson gson = new Gson();
+		response = gson.toJson(etat);
+	}
+	}
+	
 
 }

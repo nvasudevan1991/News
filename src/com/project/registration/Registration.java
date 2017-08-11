@@ -1,5 +1,7 @@
 package com.project.registration;
 
+import java.sql.Date;
+
 public class Registration {
 
 	private String firstName;
@@ -16,7 +18,7 @@ public class Registration {
 	}
 
 	public Registration(String firstName, String lastname, String email, String password, String confirmPassword,
-			String mobile, String gender ,String newpassword ) {
+			String mobile, String gender ,String newpassword) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastname;

@@ -10,7 +10,6 @@ public class LocalNews {
 	private String Data;
 	private String Url;
 	private String image;
-	private String video;
 	private Date date;
 	private String category;
 	
@@ -18,7 +17,7 @@ public class LocalNews {
 	{
 		
 	}
-	public LocalNews(int id,String Headlines,String Url,String image,String video,Date date,String category,String Data)
+	public LocalNews(int id,String Headlines,String Url,String image,Date date,String category,String Data)
 	{
 		super();
 		this.id =id;
@@ -26,7 +25,6 @@ public class LocalNews {
 		this.Data =Data;
 		this.Url = Url;
 		this.image = image;
-		this.video = video;
 		this.date=date;
 		this.category = category;
 	}
@@ -67,14 +65,6 @@ public class LocalNews {
 	public void setImage(String image)
 	{
 		this.image = image;
-	}
-	public String getVideo()
-	{
-		return video;
-	}
-	public void setVideo(String video)
-	{
-		this.video = video;
 	}
 	public Date getDate(){
 		return date;

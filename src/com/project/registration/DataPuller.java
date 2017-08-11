@@ -1,7 +1,7 @@
 package com.project.registration;
 
 import java.io.IOException;
-import java.sql.Date;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +15,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.mysql.fabric.xmlrpc.base.Array;
 import com.mysql.jdbc.Connection;
 
 public class DataPuller {
@@ -25,7 +24,6 @@ public class DataPuller {
 		DataPuller d = new DataPuller();
 		Connection con = null;
 		con = (Connection) DriverManager.getConnection(connectionURL, "root", "root");
-
 		ArrayList<String> LocalYahooHeadlines = d.yahooLocalNewsHeadlines();
 		ArrayList<String> LocalYahooUrl = d.yahooLocalNewsUrl();
 		ArrayList<String> LocalYahooImageUrl = d.yahooLocalImageUrl();
@@ -40,7 +38,6 @@ public class DataPuller {
 		ArrayList<String> PoliticsYahooData = d.yahooPoliticsNewsdata();
 		ArrayList<String> LocalYorkHeadlines = d.yorkLocalNewsHeadlines();
 		ArrayList<String> LocalYorkUrl = d.yorkLocalNewsUrl();
-		ArrayList<String> LocalYorkDate =d.yorkLocalNewsDate();
 		ArrayList<String> LocalYorkImageUrl = d.yorkLocalImageUrl();
 		ArrayList<String> LocalYorkData = d.yorkLocalNewsdata();
 		ArrayList<String> WorldYorkHeadlines = d.yorkWorldNewsHeadlines();
@@ -66,15 +63,14 @@ public class DataPuller {
 
 				{
 					String insertTableSQL = "INSERT INTO newsdata"
-							+ "(Headlines, Url, Image, Video, date, Category, data) VALUES" + "(?,?,?,?,?,?,?)";
+							+ "(Headlines, Url, Image, date, Category, data) VALUES" + "(?,?,?,?,?,?)";
 					PreparedStatement prep = (PreparedStatement) con.prepareStatement(insertTableSQL);
 					prep.setString(1, LocalYahooHeadlines.get(i).toString());
 					prep.setString(2, LocalYahooUrl.get(i).toString());
 					prep.setString(3, LocalYahooImageUrl.get(i).toString());
-					prep.setString(4, "null");
-					prep.setString(5, dtf.format(now));
-					prep.setString(6, "LocalNews");
-					prep.setString(7, LocalYahooData.get(i).toString());
+					prep.setString(4, dtf.format(now));
+					prep.setString(5, "LocalNews");
+					prep.setString(6, LocalYahooData.get(i).toString());
 
 					prep.executeUpdate();
 
@@ -95,15 +91,14 @@ public class DataPuller {
 
 				{
 					String insertTableSQL = "INSERT INTO newsdata"
-							+ "(Headlines, Url, Image, Video, date, Category, data) VALUES" + "(?,?,?,?,?,?,?)";
+							+ "(Headlines, Url, Image, date, Category, data) VALUES" + "(?,?,?,?,?,?)";
 					PreparedStatement prep = (PreparedStatement) con.prepareStatement(insertTableSQL);
 					prep.setString(1, WorldYahooHeadlines.get(i).toString());
 					prep.setString(2, WorldYahooUrl.get(i).toString());
 					prep.setString(3, WorldYahooImageUrl.get(i).toString());
-					prep.setString(4, "null");
-					prep.setString(5, dtf.format(now));
-					prep.setString(6, "WorldNews");
-					prep.setString(7, WorldYahooData.get(i).toString());
+					prep.setString(4, dtf.format(now));
+					prep.setString(5, "WorldNews");
+					prep.setString(6, WorldYahooData.get(i).toString());
 
 					prep.executeUpdate();
 
@@ -124,15 +119,14 @@ public class DataPuller {
 
 				{
 					String insertTableSQL = "INSERT INTO newsdata"
-							+ "(Headlines, Url, Image, Video, date, Category, data) VALUES" + "(?,?,?,?,?,?,?)";
+							+ "(Headlines, Url, Image,date, Category, data) VALUES" + "(?,?,?,?,?,?)";
 					PreparedStatement prep = (PreparedStatement) con.prepareStatement(insertTableSQL);
 					prep.setString(1, PoliticsYahooHeadlines.get(i).toString());
 					prep.setString(2, PoliticsYahooUrl.get(i).toString());
 					prep.setString(3, PoliticsYahooImageUrl.get(i).toString());
-					prep.setString(4, "null");
-					prep.setString(5, dtf.format(now));
-					prep.setString(6, "PoliticsNews");
-					prep.setString(7, PoliticsYahooData.get(i).toString());
+					prep.setString(4, dtf.format(now));
+					prep.setString(5, "PoliticsNews");
+					prep.setString(6, PoliticsYahooData.get(i).toString());
 
 					prep.executeUpdate();
 
@@ -156,15 +150,14 @@ public class DataPuller {
 
 				{
 					String insertTableSQL = "INSERT INTO newsdata"
-							+ "(Headlines, Url, Image, Video, date, Category, data) VALUES" + "(?,?,?,?,?,?,?)";
+							+ "(Headlines, Url, Image,date, Category, data) VALUES" + "(?,?,?,?,?,?)";
 					PreparedStatement prep = (PreparedStatement) con.prepareStatement(insertTableSQL);
 					prep.setString(1, LocalYorkHeadlines.get(i).toString());
 					prep.setString(2, LocalYorkUrl.get(i).toString());
 					prep.setString(3, LocalYorkImageUrl.get(i).toString());
-					prep.setString(4, "null");
-					prep.setString(5, dtf.format(now));
-					prep.setString(6, "LocalNews");
-					prep.setString(7, LocalYorkData.get(i).toString());
+					prep.setString(4, dtf.format(now));
+					prep.setString(5, "LocalNews");
+					prep.setString(6, LocalYorkData.get(i).toString());
 
 					prep.executeUpdate();
 
@@ -186,15 +179,14 @@ public class DataPuller {
 
 				{
 					String insertTableSQL = "INSERT INTO newsdata"
-							+ "(Headlines, Url, Image, Video, date, Category, data) VALUES" + "(?,?,?,?,?,?,?)";
+							+ "(Headlines, Url, Image,date, Category, data) VALUES" + "(?,?,?,?,?,?)";
 					PreparedStatement prep = (PreparedStatement) con.prepareStatement(insertTableSQL);
 					prep.setString(1, WorldYorkHeadlines.get(i).toString());
 					prep.setString(2, WorldYorkUrl.get(i).toString());
 					prep.setString(3, WorldYorkImageUrl.get(i).toString());
-					prep.setString(4, "null");
-					prep.setString(5, dtf.format(now));
-					prep.setString(6, "WorldNews");
-					prep.setString(7, WorldYorkData.get(i).toString());
+					prep.setString(4, dtf.format(now));
+					prep.setString(5, "WorldNews");
+					prep.setString(6, WorldYorkData.get(i).toString());
 
 					prep.executeUpdate();
 
@@ -217,15 +209,14 @@ public class DataPuller {
 
 				{
 					String insertTableSQL = "INSERT INTO newsdata"
-							+ "(Headlines, Url, Image, Video, date, Category, data) VALUES" + "(?,?,?,?,?,?,?)";
+							+ "(Headlines, Url, Image,date, Category, data) VALUES" + "(?,?,?,?,?,?)";
 					PreparedStatement prep = (PreparedStatement) con.prepareStatement(insertTableSQL);
 					prep.setString(1, PoliticsYorkHeadlines.get(i).toString());
 					prep.setString(2, PoliticsYorkUrl.get(i).toString());
 					prep.setString(3, PoliticsYorkImageUrl.get(i).toString());
-					prep.setString(4, "null");
-					prep.setString(5, dtf.format(now));
-					prep.setString(6, "PoliticsNews");
-					prep.setString(7, PoliticsYorkData.get(i).toString());
+					prep.setString(4, dtf.format(now));
+					prep.setString(5, "PoliticsNews");
+					prep.setString(6, PoliticsYorkData.get(i).toString());
 
 					prep.executeUpdate();
 
@@ -475,7 +466,7 @@ public class DataPuller {
 		return LocalUrl;
 
 	}
-	
+
 	public ArrayList<String> yorkLocalNewsDate() {
 		ArrayList<String> LocalDate = new ArrayList<>();
 		try {
@@ -490,7 +481,6 @@ public class DataPuller {
 		return LocalDate;
 
 	}
-	
 
 	public ArrayList<String> yorkLocalImageUrl() {
 
