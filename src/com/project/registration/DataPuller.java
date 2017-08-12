@@ -52,9 +52,9 @@ public class DataPuller {
 		for (int i = 0; i < LocalYahooHeadlines.size(); i++) {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
-			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
+			String checkContent = "SELECT COUNT(data) FROM newsdata WHERE data = ?";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
-			stmt.setString(1, LocalYahooHeadlines.get(i).toString());
+			stmt.setString(1, LocalYahooData.get(i).toString());
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				int count = rs.getInt(1);
@@ -81,9 +81,9 @@ public class DataPuller {
 		for (int i = 0; i < WorldYahooHeadlines.size(); i++) {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
-			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
+			String checkContent = "SELECT COUNT(data) FROM newsdata WHERE data = ?";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
-			stmt.setString(1, WorldYahooHeadlines.get(i).toString());
+			stmt.setString(1, WorldYahooData.get(i).toString());
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				int count = rs.getInt(1);
@@ -109,9 +109,9 @@ public class DataPuller {
 		for (int i = 0; i < PoliticsYahooHeadlines.size(); i++) {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
-			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
+			String checkContent = "SELECT COUNT(data) FROM newsdata WHERE data = ?";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
-			stmt.setString(1, PoliticsYahooHeadlines.get(i).toString());
+			stmt.setString(1, PoliticsYahooData.get(i).toString());
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				int count = rs.getInt(1);

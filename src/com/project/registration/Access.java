@@ -22,10 +22,9 @@ public class Access {
 		lname = r.getString(2);
 		LogoutTime = r.getString(3);
 		}
-		System.out.println(LogoutTime);
 		fullName = fname + " " + lname;
 		
-		return fullName ;
+		return fullName + " " + LogoutTime ;
 	}
 
 	public void addDetails(Connection con, Registration d) throws SQLException {
@@ -61,13 +60,28 @@ public class Access {
 		prep.setString(3,str2.toString());
 		prep.executeUpdate();
 	}
-	public  ArrayList<LocalNews> getNews(Connection con ) throws SQLException
+	public  ArrayList<LocalNews> getNews(Connection con ,String logoutDetailTime) throws SQLException
 	{
+		String localnewsQueryCustomer = null;
+		String localnewsQuery = null;
 		ArrayList<LocalNews> localNewsList = new ArrayList<LocalNews>();
-		String localnewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC LIMIT 20";
-		PreparedStatement stmt = con.prepareStatement(localnewsQuery);
-		stmt.setString(1, "LocalNews");
-		ResultSet rs =stmt.executeQuery();
+		localNewsList.clear();
+		ResultSet rs = null;
+		System.out.println(logoutDetailTime);
+		if(!logoutDetailTime.isEmpty()){
+		localnewsQueryCustomer = "SELECT * FROM newsdata WHERE Category = ? AND date > 'logoutDetailTime' ORDER BY `newsdata`.`date` DESC LIMIT 5";
+		PreparedStatement stmt1 = con.prepareStatement(localnewsQueryCustomer);
+		stmt1.setString(1, "LocalNews");
+		
+		rs =stmt1.executeQuery();
+		}else if (logoutDetailTime.isEmpty()){ 
+			localnewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC ";
+			PreparedStatement stmt = con.prepareStatement(localnewsQuery);
+			
+			stmt.setString(1, "LocalNews");
+			
+			rs =stmt.executeQuery();	
+		}
 		try
 		{
 			while(rs.next())
@@ -89,13 +103,28 @@ public class Access {
 		}
 		return localNewsList;
 	}
-	public  ArrayList<LocalNews> getsportsNews(Connection con ) throws SQLException
+	public  ArrayList<LocalNews> getsportsNews(Connection con,String logoutDetailTime) throws SQLException
 	{
+		String sportsnewsQueryCustomer = null;
+		String sportsnewsQuery = null;
 		ArrayList<LocalNews> sportsNewsList = new ArrayList<LocalNews>();
-		String sportsNewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC LIMIT 20";
-		PreparedStatement stmt = con.prepareStatement(sportsNewsQuery);
-		stmt.setString(1, "PoliticsNews");
-		ResultSet rs =stmt.executeQuery();
+		sportsNewsList.clear();
+		ResultSet rs = null;
+		System.out.println(logoutDetailTime);
+		if(!logoutDetailTime.isEmpty()){
+		sportsnewsQueryCustomer = "SELECT * FROM newsdata WHERE Category = ? AND date > 'logoutDetailTime' ORDER BY `newsdata`.`date` DESC LIMIT 5";
+		PreparedStatement stmt1 = con.prepareStatement(sportsnewsQueryCustomer);
+		stmt1.setString(1, "PoliticsNews");
+	
+		rs =stmt1.executeQuery();
+		}else if (logoutDetailTime.isEmpty()){ 
+			sportsnewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC ";
+			PreparedStatement stmt = con.prepareStatement(sportsnewsQuery);
+			
+			stmt.setString(1, "PoliticsNews");
+			
+			rs =stmt.executeQuery();	
+		}
 		try
 		{
 			while(rs.next())
@@ -116,13 +145,28 @@ public class Access {
 		}
 		return sportsNewsList;
 	}
-	public  ArrayList<LocalNews> getWorldNews(Connection con ) throws SQLException
+	public  ArrayList<LocalNews> getWorldNews(Connection con ,String logoutDetailTime) throws SQLException
 	{
-		String worldNewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC LIMIT 20";
+		String worldnewsQueryCustomer = null;
+		String worldnewsQuery = null;
 		ArrayList<LocalNews> worldNewsList = new ArrayList<LocalNews>();
-		PreparedStatement stmt = con.prepareStatement(worldNewsQuery);
-		stmt.setString(1, "WorldNews");
-		ResultSet rs =stmt.executeQuery();
+		worldNewsList.clear();
+		ResultSet rs = null;
+		System.out.println(logoutDetailTime);
+		if(!logoutDetailTime.isEmpty()){
+			worldnewsQueryCustomer = "SELECT * FROM newsdata WHERE Category = ? AND date > 'logoutDetailTime' ORDER BY `newsdata`.`date` DESC LIMIT 5";
+		PreparedStatement stmt1 = con.prepareStatement(worldnewsQueryCustomer);
+		stmt1.setString(1, "WorldNews");
+		
+		rs =stmt1.executeQuery();
+		}else if (logoutDetailTime.isEmpty()){ 
+			worldnewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC ";
+			PreparedStatement stmt = con.prepareStatement(worldnewsQuery);
+			
+			stmt.setString(1, "WorldNews");
+			
+			rs =stmt.executeQuery();	
+		}
 		try
 		{
 			while(rs.next())

@@ -11,25 +11,25 @@ public class NewsManager {
 
 	Access access = new Access();
 
-	public ArrayList<LocalNews>getNews() throws Exception {
+	public ArrayList<LocalNews>getNews(String logoutDetailTime) throws Exception {
 		ArrayList<LocalNews> localNewsList = new ArrayList<LocalNews>();
 		Database db =new Database();
 		Connection con = db.getConnection();
-		localNewsList = access.getNews(con);
+		localNewsList = access.getNews(con,logoutDetailTime);
 		return localNewsList;
 	}
-	public ArrayList<LocalNews> getWorldNews() throws Exception {
+	public ArrayList<LocalNews> getWorldNews(String logoutDetailTime) throws Exception {
 		ArrayList<LocalNews> WorldNewsList = new ArrayList<LocalNews>();
 		Database db =new Database();
 		Connection con = db.getConnection();
-		WorldNewsList = access.getWorldNews(con);
+		WorldNewsList = access.getWorldNews(con,logoutDetailTime);
 		return WorldNewsList;
 	}
-	public ArrayList<LocalNews> getsportsNews() throws Exception {
+	public ArrayList<LocalNews> getsportsNews(String logoutDetailTime) throws Exception {
 		ArrayList<LocalNews> SportsNewsList = new ArrayList<LocalNews>();
 		Database db =new Database();
 		Connection con = db.getConnection();
-		SportsNewsList = access.getsportsNews(con);
+		SportsNewsList = access.getsportsNews(con,logoutDetailTime);
 		return SportsNewsList;
 	}
 	public ArrayList<LocalNews> getSearchNews(String searchcontent) throws Exception {

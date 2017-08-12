@@ -15,14 +15,14 @@ import com.project.registration.NewsManager;
 @Path("data")
 public class DataService {
 
-	@GET
+	@POST
 	@Path("localnews")
 	@Produces("application/json")
-	public String localNewsData() {
+	public String localNewsData(@FormParam("logoutDetailTime") String logoutDetailTime) {
 		String localNews = null;
 		ArrayList<LocalNews> localNewsList = new ArrayList<LocalNews>();
 		try {
-			localNewsList = new NewsManager().getNews();
+			localNewsList = new NewsManager().getNews(logoutDetailTime);
 			Gson gson = new Gson();
 			localNews = gson.toJson(localNewsList);
 
@@ -32,14 +32,14 @@ public class DataService {
 		return localNews;
 	}
 
-	@GET
+	@POST
 	@Path("worldnews")
 	@Produces("application/json")
-	public String worldNewsData() {
+	public String worldNewsData(@FormParam("logoutDetailTime") String logoutDetailTime) {
 		String worldNews = null;
 		ArrayList<LocalNews> worldNewsList = new ArrayList<LocalNews>();
 		try {
-			worldNewsList = new NewsManager().getWorldNews();
+			worldNewsList = new NewsManager().getWorldNews(logoutDetailTime);
 			Gson gson = new Gson();
 			worldNews = gson.toJson(worldNewsList);
 
@@ -49,14 +49,14 @@ public class DataService {
 		return worldNews;
 	}
 
-	@GET
+	@POST
 	@Path("sportsnews")
 	@Produces("application/json")
-	public String sportsNewsData() {
+	public String sportsNewsData(@FormParam("logoutDetailTime") String logoutDetailTime) {
 		String sportsNews = null;
 		ArrayList<LocalNews> sportsNewsList = new ArrayList<LocalNews>();
 		try {
-			sportsNewsList = new NewsManager().getsportsNews();
+			sportsNewsList = new NewsManager().getsportsNews(logoutDetailTime);
 			Gson gson = new Gson();
 			sportsNews = gson.toJson(sportsNewsList);
 

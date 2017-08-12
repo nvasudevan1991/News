@@ -30,10 +30,12 @@ public class RegistrationService {
 
 		try {
 			users = new AccessManager().getDetails(email, password,LastLogout);
+			String userName= users.split(" ")[0] + " " + users.split(" " )[1];
+			String logoutDateTime = users.split(" " )[2]+ " "+ users.split(" ")[3] ;
 			Gson gson = new Gson();
-			users = gson.toJson(users);
-			if (!users.contains("null null")) {
-				String json = users;
+			userName = gson.toJson(userName + " " +logoutDateTime );
+			if (!userName.contains("null null")) {
+				String json = userName;
 				return Response.ok(json, MediaType.APPLICATION_JSON).build();
 			} else 
 				
@@ -102,6 +104,7 @@ public class RegistrationService {
 	@Produces("application/x-www-form-urlencoded")
 	public void updateLogoutTime(@FormParam("fname") String fname, @FormParam("lname") String lname){	
 	String response = " ";
+	System.out.println(fname + lname);
 	try {
 		new AccessManager().changeLogout(fname, lname);
 		Gson gson = new Gson();
@@ -112,7 +115,7 @@ public class RegistrationService {
 		Gson gson = new Gson();
 		response = gson.toJson(etat);
 	}
-	}
+}
 	
 
 }
