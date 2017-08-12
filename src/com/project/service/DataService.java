@@ -76,14 +76,11 @@ public class DataService {
 			searchNewsList = new NewsManager().getSearchNews(searchcontent);
 			Gson gson = new Gson();
 			search = gson.toJson(searchNewsList);
-			
-			
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return search;
 	}
-	
+
 }
