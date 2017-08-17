@@ -52,9 +52,10 @@ public class DataPuller {
 		for (int i = 0; i < LocalYahooHeadlines.size(); i++) {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
-			String checkContent = "SELECT COUNT(data) FROM newsdata WHERE data = ?";
+			String checkContent = "SELECT COUNT(data) FROM newsdata WHERE data = ? OR Image = ? ";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
 			stmt.setString(1, LocalYahooData.get(i).toString());
+			stmt.setString(2, LocalYahooImageUrl.get(i).toString());
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				int count = rs.getInt(1);
@@ -81,9 +82,10 @@ public class DataPuller {
 		for (int i = 0; i < WorldYahooHeadlines.size(); i++) {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
-			String checkContent = "SELECT COUNT(data) FROM newsdata WHERE data = ?";
+			String checkContent = "SELECT COUNT(data) FROM newsdata WHERE data = ? OR Image = ? ";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
 			stmt.setString(1, WorldYahooData.get(i).toString());
+			stmt.setString(2, WorldYahooImageUrl.get(i).toString());
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				int count = rs.getInt(1);
@@ -109,9 +111,10 @@ public class DataPuller {
 		for (int i = 0; i < PoliticsYahooHeadlines.size(); i++) {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
-			String checkContent = "SELECT COUNT(data) FROM newsdata WHERE data = ?";
+			String checkContent = "SELECT COUNT(data) FROM newsdata WHERE data = ? OR Image = ? ";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
 			stmt.setString(1, PoliticsYahooData.get(i).toString());
+			stmt.setString(2, PoliticsYahooImageUrl.get(i).toString());
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				int count = rs.getInt(1);
@@ -139,9 +142,10 @@ public class DataPuller {
 		for (int i = 0; i < LocalYorkHeadlines.size(); i++) {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
-			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
+			String checkContent = "SELECT COUNT(data) FROM newsdata WHERE data = ? OR Image = ? ";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
-			stmt.setString(1, LocalYorkHeadlines.get(i).toString());
+			stmt.setString(1, LocalYorkData.get(i).toString());
+			stmt.setString(2, LocalYorkImageUrl.get(i).toString());
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				int count = rs.getInt(1);
@@ -168,9 +172,10 @@ public class DataPuller {
 		for (int i = 0; i < WorldYorkHeadlines.size(); i++) {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
-			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
+			String checkContent = "SELECT COUNT(data) FROM newsdata WHERE data = ? OR Image = ? ";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
-			stmt.setString(1, WorldYorkHeadlines.get(i).toString());
+			stmt.setString(1, WorldYorkData.get(i).toString());
+			stmt.setString(2, WorldYorkImageUrl.get(i).toString());
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				int count = rs.getInt(1);
@@ -198,9 +203,10 @@ public class DataPuller {
 		for (int i = 0; i < PoliticsYorkHeadlines.size(); i++) {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
-			String checkContent = "SELECT COUNT(Headlines) FROM newsdata WHERE Headlines = ?";
+			String checkContent = "SELECT COUNT(data) FROM newsdata WHERE data = ? OR Image = ? ";
 			PreparedStatement stmt = con.prepareStatement(checkContent);
-			stmt.setString(1, PoliticsYorkHeadlines.get(i).toString());
+			stmt.setString(1, PoliticsYorkData.get(i).toString());
+			stmt.setString(2, PoliticsYorkImageUrl.get(i).toString());
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				int count = rs.getInt(1);

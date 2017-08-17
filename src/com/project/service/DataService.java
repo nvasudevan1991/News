@@ -25,7 +25,7 @@ public class DataService {
 			localNewsList = new NewsManager().getNews(logoutDetailTime);
 			Gson gson = new Gson();
 			localNews = gson.toJson(localNewsList);
-
+			System.out.println(localNews);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -81,6 +81,64 @@ public class DataService {
 			e.printStackTrace();
 		}
 		return search;
+	}
+
+	@POST
+	@Path("recommends")
+	@Produces("application/json")
+	public String recommendedLocalNews(@FormParam("id") String id, @FormParam("url") String url,
+			@FormParam("fname") String fname, @FormParam("lname") String lname,
+			@FormParam("category") String category) {
+		String recommendedlocalNews = null;
+		System.out.println(category);
+		ArrayList<LocalNews> recommendedLocalNewsList = new ArrayList<LocalNews>();
+		if (category.equals("LocalNews")) {
+			if (!fname.contentEquals("null") && !lname.contentEquals("null")) {
+				try {
+					recommendedLocalNewsList = new NewsManager().getrecommendedLocalNews(fname, lname, category);
+					Gson gson = new Gson();
+					recommendedlocalNews = gson.toJson(recommendedLocalNewsList);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				System.out.println(recommendedlocalNews);
+			} else {
+				System.out.println("no Use");
+			}
+		} else if (category.equals("WorldNews")) {
+			if (!fname.contentEquals("null") && !lname.contentEquals("null")) {
+				try {
+					recommendedLocalNewsList = new NewsManager().getrecommendedWorldNews(fname, lname, category);
+					Gson gson = new Gson();
+					recommendedlocalNews = gson.toJson(recommendedLocalNewsList);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				System.out.println(recommendedlocalNews);
+			} else {
+				System.out.println("no Use");
+			}
+
+		} else if (category.equals("PoliticsNews")) {
+			if (!fname.contentEquals("null") && !lname.contentEquals("null")) {
+				try {
+					recommendedLocalNewsList = new NewsManager().getrecommendedPoliticsNews(fname, lname, category);
+					Gson gson = new Gson();
+					recommendedlocalNews = gson.toJson(recommendedLocalNewsList);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				System.out.println(recommendedlocalNews);
+			} else {
+				System.out.println("no Use");
+			}
+
+		}
+
+		return recommendedlocalNews;
 	}
 
 }

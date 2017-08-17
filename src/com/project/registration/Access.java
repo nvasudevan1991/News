@@ -92,6 +92,7 @@ public class Access {
 				l.setImage(rs.getString("Image"));
 				l.setUrl(rs.getString("Url"));
 				localNewsList.add(l);
+				System.out.println(localNewsList);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -127,6 +128,7 @@ public class Access {
 				l.setImage(rs.getString("Image"));
 				l.setUrl(rs.getString("Url"));
 				sportsNewsList.add(l);
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -191,5 +193,38 @@ public class Access {
 			e.printStackTrace();
 		}
 		return searchNewsList;
+	}
+	public ArrayList<LocalNews> getrecommendedLocalNews (Connection con,String fname,String lname,String category) throws SQLException {
+		String query = "Update registrationdetails SET LocalNewsCount = LocalNewsCount + 1 WHERE fname = ? AND Lname = ?";
+		ArrayList<LocalNews> recommenedLocalNewsList = new ArrayList<LocalNews>();
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, fname.toString());
+		stmt.setString(2, lname.toString());
+		
+		System.out.println(stmt);
+		stmt.executeUpdate();
+	return recommenedLocalNewsList;
+	}
+	public ArrayList<LocalNews> getrecommendedWorldNews (Connection con,String fname,String lname,String category) throws SQLException {
+		String query = "Update registrationdetails SET WorldNewsCount = WorldNewsCount + 1 WHERE fname = ? AND Lname = ?";
+		ArrayList<LocalNews> recommenedLocalNewsList = new ArrayList<LocalNews>();
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, fname.toString());
+		stmt.setString(2, lname.toString());
+		
+		System.out.println(stmt);
+		stmt.executeUpdate();
+	return recommenedLocalNewsList;
+	}
+	public ArrayList<LocalNews> getrecommendedPoliticsNews (Connection con,String fname,String lname,String category) throws SQLException {
+		String query = "Update registrationdetails SET PoliticsNewsCount = PoliticsNewsCount + 1 WHERE fname = ? AND Lname = ?";
+		ArrayList<LocalNews> recommenedLocalNewsList = new ArrayList<LocalNews>();
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, fname.toString());
+		stmt.setString(2, lname.toString());
+		
+		System.out.println(stmt);
+		stmt.executeUpdate();
+	return recommenedLocalNewsList;
 	}
 }

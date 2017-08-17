@@ -25,21 +25,30 @@ public class RegistrationService {
 	@POST
 	@Path("users")
 	@Produces("application/json")
-	public Response users(@FormParam("loginemail") String email, @FormParam("loginpass") String password,String LastLogout) {
-		String users = null;
+	public Response users(@FormParam("loginemail") String email, @FormParam("loginpass") String password,
+			String LastLogout) {
+		String users = null , userName =null,logoutDateTime = null;
 
 		try {
-			users = new AccessManager().getDetails(email, password,LastLogout);
-			String userName= users.split(" ")[0] + " " + users.split(" " )[1];
-			String logoutDateTime = users.split(" " )[2]+ " "+ users.split(" ")[3] ;
-			Gson gson = new Gson();
-			userName = gson.toJson(userName + " " +logoutDateTime );
-			if (!userName.contains("null null")) {
-				String json = userName;
-				return Response.ok(json, MediaType.APPLICATION_JSON).build();
-			} else 
+			
+				users = new AccessManager().getDetails(email, password, LastLogout);
+				if(users.split(" ").length == 4){
+				userName = users.split(" ")[0] + " " + users.split(" ")[1];
+				logoutDateTime = users.split(" ")[2] + " " + users.split(" ")[3];
+				} else {
+					userName = users.split(" ")[0] + " " + users.split(" ")[1];
+					logoutDateTime= "null";
+				}
+				Gson gson = new Gson();
+				userName = gson.toJson(userName + " " + logoutDateTime);
 				
-				return Response.status(Response.Status.BAD_REQUEST).build();
+				if (!userName.contains("null null")) {
+					String json = userName;
+					return Response.ok(json, MediaType.APPLICATION_JSON).build();
+				} else
+
+					return Response.status(Response.Status.BAD_REQUEST).build();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,10 +80,10 @@ public class RegistrationService {
 		} catch (Exception er) {
 			er.printStackTrace();
 			String etat = "Error";
-			//Gson gson = new Gson();
-			//response = gson.toJson(etat);
+			// Gson gson = new Gson();
+			// response = gson.toJson(etat);
 			return etat;
-			
+
 		}
 		return response;
 	}
@@ -82,12 +91,12 @@ public class RegistrationService {
 	@Path("changePassword")
 	@POST
 	@Produces("application/x-www-form-urlencoded")
-	public void updatePassword(@FormParam("changeemail") String Email,@FormParam("currentpassword") String currentPassword,
-			@FormParam("newpassword") String confirmpassword) {
+	public void updatePassword(@FormParam("changeemail") String Email,
+			@FormParam("currentpassword") String currentPassword, @FormParam("newpassword") String confirmpassword) {
 		String response = "";
-		//Registration d = new Registration();
+		// Registration d = new Registration();
 		try {
-			new AccessManager().modifyDetails(Email,confirmpassword,confirmpassword);
+			new AccessManager().modifyDetails(Email, confirmpassword, confirmpassword);
 			Gson gson = new Gson();
 			response = gson.toJson(response);
 		} catch (Exception er) {
@@ -96,26 +105,25 @@ public class RegistrationService {
 			Gson gson = new Gson();
 			response = gson.toJson(etat);
 		}
-		
+
 	}
-	
+
 	@Path("logoutdetails")
 	@POST
 	@Produces("application/x-www-form-urlencoded")
-	public void updateLogoutTime(@FormParam("fname") String fname, @FormParam("lname") String lname){	
-	String response = " ";
-	System.out.println(fname + lname);
-	try {
-		new AccessManager().changeLogout(fname, lname);
-		Gson gson = new Gson();
-		response = gson.toJson(response);
-	}catch (Exception er) {
-		er.printStackTrace();
-		String etat = "ECHEC";
-		Gson gson = new Gson();
-		response = gson.toJson(etat);
+	public void updateLogoutTime(@FormParam("fname") String fname, @FormParam("lname") String lname) {
+		String response = " ";
+		System.out.println(fname + lname);
+		try {
+			new AccessManager().changeLogout(fname, lname);
+			Gson gson = new Gson();
+			response = gson.toJson(response);
+		} catch (Exception er) {
+			er.printStackTrace();
+			String etat = "ECHEC";
+			Gson gson = new Gson();
+			response = gson.toJson(etat);
+		}
 	}
-}
-	
 
 }

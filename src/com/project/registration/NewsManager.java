@@ -39,5 +39,26 @@ public class NewsManager {
 		SearchNewsList = access.getSearchNews(con,searchcontent);
 		return SearchNewsList;
 	}
+	public ArrayList<LocalNews> getrecommendedLocalNews (String fname,String lname,String category) throws Exception{
+		ArrayList<LocalNews> recommendedLocalNewsList = new ArrayList<LocalNews>();
+		Database db =new Database();
+		Connection con = db.getConnection();
+		recommendedLocalNewsList = access.getrecommendedLocalNews(con,fname,lname,category);
+		return recommendedLocalNewsList;
+	}
+	public ArrayList<LocalNews> getrecommendedWorldNews (String fname,String lname,String category) throws Exception{
+		ArrayList<LocalNews> recommendedWorldNewsList = new ArrayList<LocalNews>();
+		Database db =new Database();
+		Connection con = db.getConnection();
+		recommendedWorldNewsList = access.getrecommendedWorldNews(con,fname,lname,category);
+		return recommendedWorldNewsList;
+	}
+	public ArrayList<LocalNews> getrecommendedPoliticsNews (String fname,String lname,String category) throws Exception{
+		ArrayList<LocalNews> recommendedPoliticsNewsList = new ArrayList<LocalNews>();
+		Database db =new Database();
+		Connection con = db.getConnection();
+		recommendedPoliticsNewsList = access.getrecommendedPoliticsNews(con,fname,lname,category);
+		return recommendedPoliticsNewsList;
+	}
 }
 
