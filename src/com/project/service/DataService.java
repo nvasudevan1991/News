@@ -141,13 +141,13 @@ public class DataService {
 		ArrayList<LocalNews> searchNewsList = new ArrayList<LocalNews>();
 		try {
 			search = new NewsManager().getRecommendationList(fname, lname);
-			if(search.equalsIgnoreCase("LocalNews")){
-				searchNewsList = new NewsManager().getrecommends();
+			String highest = search.split(" ")[0];
+			String middle = search.split(" ")[1];
+			String lowest = search.split(" ")[2];
+				searchNewsList = new NewsManager().getrecommends(highest,middle,lowest);
 				Gson gson = new Gson();
 				search = gson.toJson(searchNewsList);
-				
-			}
-			System.out.println(search);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

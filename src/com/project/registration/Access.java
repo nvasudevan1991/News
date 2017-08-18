@@ -238,33 +238,60 @@ public class Access {
 	}
 
 	public String getrecommendedNews(Connection con, String fname, String lname) throws SQLException {
-		String query = "SELECT CASE WHEN LocalNewsCount > WorldNewsCount AND LocalNewsCount > PoliticsNewsCount THEN ? WHEN WorldNewsCount >LocalNewsCount AND WorldNewsCount >PoliticsNewsCount THEN ? WHEN PoliticsNewsCount >LocalNewsCount AND PoliticsNewsCount >WorldNewsCount THEN ? END FROM registrationdetails Where fname = ? AND lname = ?";
-		String recommenededNewsList = null;
-		PreparedStatement stmt = con.prepareStatement(query);
+		String query1 = "SELECT CASE WHEN LocalNewsCount > WorldNewsCount AND LocalNewsCount > PoliticsNewsCount THEN ? WHEN WorldNewsCount >LocalNewsCount AND WorldNewsCount >PoliticsNewsCount THEN ? WHEN PoliticsNewsCount >LocalNewsCount AND PoliticsNewsCount >WorldNewsCount THEN ? END FROM registrationdetails Where fname = ? AND lname = ?";
+		String query2 = "SELECT CASE WHEN LocalNewsCount < WorldNewsCount AND LocalNewsCount < PoliticsNewsCount THEN ? WHEN WorldNewsCount <LocalNewsCount AND WorldNewsCount <PoliticsNewsCount THEN ? WHEN PoliticsNewsCount <LocalNewsCount AND PoliticsNewsCount < WorldNewsCount THEN ? END FROM registrationdetails Where fname = ? AND lname = ?";
+		String querymiddle = "SELECT CASE WHEN ((LocalNewsCount < WorldNewsCount AND PoliticsNewsCount > WorldNewsCount) OR (PoliticsNewsCount<WorldNewsCount AND LocalNewsCount >WorldNewsCount))THEN ? WHEN ((PoliticsNewsCount > LocalNewsCount AND WorldNewsCount > PoliticsNewsCount)OR (PoliticsNewsCount > WorldNewsCount AND LocalNewsCount >PoliticsNewsCount)) THEN ? WHEN ((LocalNewsCount >WorldNewsCount AND PoliticsNewsCount >LocalNewsCount) OR (LocalNewsCount >PoliticsNewsCount AND WorldNewsCount >LocalNewsCount)) THEN ? END FROM registrationdetails WHERE fname = ? AND lname=?";
+		String recommenededNewsList1 = null, recommenededNewsList2 = null, recommendedmiddle = null;
+		PreparedStatement stmt = con.prepareStatement(query1);
+		PreparedStatement stmt2 = con.prepareStatement(query2);
+		PreparedStatement stmt3 = con.prepareStatement(querymiddle);
 		stmt.setString(1, "LocalNews");
 		stmt.setString(2, "WorldNews");
 		stmt.setString(3, "PoliticsNews");
 		stmt.setString(4, fname.toString());
 		stmt.setString(5, lname.toString());
+		stmt2.setString(1, "LocalNews");
+		stmt2.setString(2, "WorldNews");
+		stmt2.setString(3, "PoliticsNews");
+		stmt2.setString(4, fname.toString());
+		stmt2.setString(5, lname.toString());
+		stmt3.setString(1, "WorldNews");
+		stmt3.setString(2, "PoliticsNews");
+		stmt3.setString(3, "LocalNews");
+		stmt3.setString(4, fname.toString());
+		stmt3.setString(5, lname.toString());
+
 		ResultSet r = stmt.executeQuery();
+		ResultSet r2 = stmt2.executeQuery();
+		ResultSet r3 = stmt3.executeQuery();
 		while (r.next()) {
-			recommenededNewsList = r.getString(1);
+			recommenededNewsList1 = r.getString(1);
 		}
-		return recommenededNewsList;
+		while (r2.next()) {
+			recommenededNewsList2 = r2.getString(1);
+		}
+		while (r3.next()) {
+			recommendedmiddle = r3.getString(1);
+		}
+		return recommenededNewsList1 + " " + recommendedmiddle + " " + recommenededNewsList2;
 	}
 
-	public ArrayList<LocalNews> getrecommendedList(Connection con) throws SQLException {
-		String query = "SELECT *  FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC LIMIT 5";
+	public ArrayList<LocalNews> getrecommendedList(Connection con, String highest, String middle, String lowest)
+			throws SQLException {
+		String query = "SELECT *  FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC LIMIT 2";
 		ArrayList<LocalNews> recommenedLocalNewsList = new ArrayList<LocalNews>();
 		PreparedStatement stmt1 = con.prepareStatement(query);
 		PreparedStatement stmt2 = con.prepareStatement(query);
 		PreparedStatement stmt3 = con.prepareStatement(query);
-		stmt1.setString(1, "LocalNews");
-		stmt2.setString(1, "WorldNews");
-		stmt3.setString(1, "PoliticsNews");
+		stmt1.setString(1, highest.toString());
+		stmt2.setString(1, middle.toString());
+		stmt3.setString(1, lowest.toString());
 		ResultSet rs1 = stmt1.executeQuery();
 		ResultSet rs2 = stmt2.executeQuery();
 		ResultSet rs3 = stmt3.executeQuery();
+		System.out.println(rs1 + " " + stmt1);
+		System.out.println(rs2 + " " +stmt2);
+		System.out.println(rs3 + " " +stmt3);
 		try {
 			while (rs1.next()) {
 				LocalNews l = new LocalNews();
@@ -304,4 +331,5 @@ public class Access {
 		}
 		return recommenedLocalNewsList;
 	}
+
 }

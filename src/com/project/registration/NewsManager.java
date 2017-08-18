@@ -67,12 +67,13 @@ public class NewsManager {
 		recommendedNewsList = access.getrecommendedNews(con,fname,lname);
 		return recommendedNewsList;
 	}
-	public ArrayList<LocalNews> getrecommends() throws Exception {
+	public ArrayList<LocalNews> getrecommends(String highest,String middle,String lowest) throws Exception {
 		ArrayList<LocalNews> recommendedList = new ArrayList<LocalNews>();
 		Database db =new Database();
 		Connection con = db.getConnection();
-		recommendedList = access.getrecommendedList(con);
+		recommendedList = access.getrecommendedList(con,highest,middle,lowest);
 		return recommendedList;	
 	}
+	
 }
 
