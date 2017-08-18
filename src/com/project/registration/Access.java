@@ -76,7 +76,7 @@ public class Access {
 			stmt1.setString(2, logoutDetailTime);
 			System.out.println(stmt1);
 			rs = stmt1.executeQuery();
-			
+
 		} else if (logoutDetailTime.isEmpty()) {
 			localnewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC ";
 			PreparedStatement stmt = con.prepareStatement(localnewsQuery);
@@ -134,7 +134,7 @@ public class Access {
 				l.setImage(rs.getString("Image"));
 				l.setUrl(rs.getString("Url"));
 				sportsNewsList.add(l);
-				
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -186,7 +186,7 @@ public class Access {
 		PreparedStatement stmt = con.prepareStatement(searchNewsQuery);
 		stmt.setString(1, "%" + searchcontent.toString() + "%");
 		ResultSet rs = stmt.executeQuery();
-	try {
+		try {
 			while (rs.next()) {
 				LocalNews l = new LocalNews();
 				l.setId(rs.getInt("S.No"));
@@ -203,31 +203,105 @@ public class Access {
 		}
 		return searchNewsList;
 	}
-	public ArrayList<LocalNews> getrecommendedLocalNews (Connection con,String fname,String lname,String category) throws SQLException {
+
+	public ArrayList<LocalNews> getrecommendedLocalNews(Connection con, String fname, String lname, String category)
+			throws SQLException {
 		String query = "Update registrationdetails SET LocalNewsCount = LocalNewsCount + 1 WHERE fname = ? AND Lname = ?";
 		ArrayList<LocalNews> recommenedLocalNewsList = new ArrayList<LocalNews>();
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, fname.toString());
 		stmt.setString(2, lname.toString());
 		stmt.executeUpdate();
-	return recommenedLocalNewsList;
+		return recommenedLocalNewsList;
 	}
-	public ArrayList<LocalNews> getrecommendedWorldNews (Connection con,String fname,String lname,String category) throws SQLException {
+
+	public ArrayList<LocalNews> getrecommendedWorldNews(Connection con, String fname, String lname, String category)
+			throws SQLException {
 		String query = "Update registrationdetails SET WorldNewsCount = WorldNewsCount + 1 WHERE fname = ? AND Lname = ?";
 		ArrayList<LocalNews> recommenedLocalNewsList = new ArrayList<LocalNews>();
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, fname.toString());
 		stmt.setString(2, lname.toString());
 		stmt.executeUpdate();
-	return recommenedLocalNewsList;
+		return recommenedLocalNewsList;
 	}
-	public ArrayList<LocalNews> getrecommendedPoliticsNews (Connection con,String fname,String lname,String category) throws SQLException {
+
+	public ArrayList<LocalNews> getrecommendedPoliticsNews(Connection con, String fname, String lname, String category)
+			throws SQLException {
 		String query = "Update registrationdetails SET PoliticsNewsCount = PoliticsNewsCount + 1 WHERE fname = ? AND Lname = ?";
 		ArrayList<LocalNews> recommenedLocalNewsList = new ArrayList<LocalNews>();
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, fname.toString());
 		stmt.setString(2, lname.toString());
 		stmt.executeUpdate();
-	return recommenedLocalNewsList;
+		return recommenedLocalNewsList;
+	}
+
+	public String getrecommendedNews(Connection con, String fname, String lname) throws SQLException {
+		String query = "SELECT CASE WHEN LocalNewsCount > WorldNewsCount AND LocalNewsCount > PoliticsNewsCount THEN ? WHEN WorldNewsCount >LocalNewsCount AND WorldNewsCount >PoliticsNewsCount THEN ? WHEN PoliticsNewsCount >LocalNewsCount AND PoliticsNewsCount >WorldNewsCount THEN ? END FROM registrationdetails Where fname = ? AND lname = ?";
+		String recommenededNewsList = null;
+		PreparedStatement stmt = con.prepareStatement(query);
+		stmt.setString(1, "LocalNews");
+		stmt.setString(2, "WorldNews");
+		stmt.setString(3, "PoliticsNews");
+		stmt.setString(4, fname.toString());
+		stmt.setString(5, lname.toString());
+		ResultSet r = stmt.executeQuery();
+		while (r.next()) {
+			recommenededNewsList = r.getString(1);
+		}
+		return recommenededNewsList;
+	}
+
+	public ArrayList<LocalNews> getrecommendedList(Connection con) throws SQLException {
+		String query = "SELECT *  FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC LIMIT 5";
+		ArrayList<LocalNews> recommenedLocalNewsList = new ArrayList<LocalNews>();
+		PreparedStatement stmt1 = con.prepareStatement(query);
+		PreparedStatement stmt2 = con.prepareStatement(query);
+		PreparedStatement stmt3 = con.prepareStatement(query);
+		stmt1.setString(1, "LocalNews");
+		stmt2.setString(1, "WorldNews");
+		stmt3.setString(1, "PoliticsNews");
+		ResultSet rs1 = stmt1.executeQuery();
+		ResultSet rs2 = stmt2.executeQuery();
+		ResultSet rs3 = stmt3.executeQuery();
+		try {
+			while (rs1.next()) {
+				LocalNews l = new LocalNews();
+				l.setId(rs1.getInt("S.No"));
+				l.setCategory(rs1.getString("Category"));
+				l.setData(rs1.getString("Data"));
+				l.setHeadlines(rs1.getString("Headlines"));
+				l.setDate(rs1.getDate("date"));
+				l.setImage(rs1.getString("Image"));
+				l.setUrl(rs1.getString("Url"));
+				recommenedLocalNewsList.add(l);
+			}
+			while (rs2.next()) {
+				LocalNews l = new LocalNews();
+				l.setId(rs2.getInt("S.No"));
+				l.setCategory(rs2.getString("Category"));
+				l.setData(rs2.getString("Data"));
+				l.setHeadlines(rs2.getString("Headlines"));
+				l.setDate(rs2.getDate("date"));
+				l.setImage(rs2.getString("Image"));
+				l.setUrl(rs2.getString("Url"));
+				recommenedLocalNewsList.add(l);
+			}
+			while (rs3.next()) {
+				LocalNews l = new LocalNews();
+				l.setId(rs3.getInt("S.No"));
+				l.setCategory(rs3.getString("Category"));
+				l.setData(rs3.getString("Data"));
+				l.setHeadlines(rs3.getString("Headlines"));
+				l.setDate(rs3.getDate("date"));
+				l.setImage(rs3.getString("Image"));
+				l.setUrl(rs3.getString("Url"));
+				recommenedLocalNewsList.add(l);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return recommenedLocalNewsList;
 	}
 }

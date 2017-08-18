@@ -60,5 +60,19 @@ public class NewsManager {
 		recommendedPoliticsNewsList = access.getrecommendedPoliticsNews(con,fname,lname,category);
 		return recommendedPoliticsNewsList;
 	}
+	public String getRecommendationList (String fname,String lname) throws Exception{
+		String recommendedNewsList = null;
+		Database db =new Database();
+		Connection con = db.getConnection();
+		recommendedNewsList = access.getrecommendedNews(con,fname,lname);
+		return recommendedNewsList;
+	}
+	public ArrayList<LocalNews> getrecommends() throws Exception {
+		ArrayList<LocalNews> recommendedList = new ArrayList<LocalNews>();
+		Database db =new Database();
+		Connection con = db.getConnection();
+		recommendedList = access.getrecommendedList(con);
+		return recommendedList;	
+	}
 }
 

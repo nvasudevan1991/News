@@ -91,7 +91,6 @@ public class DataService {
 			@FormParam("fname") String fname, @FormParam("lname") String lname,
 			@FormParam("category") String category) {
 		String recommendedlocalNews = null;
-		System.out.println(category);
 		ArrayList<LocalNews> recommendedLocalNewsList = new ArrayList<LocalNews>();
 		if (category.equals("LocalNews")) {
 			if (!fname.contentEquals("null") && !lname.contentEquals("null")) {
@@ -103,9 +102,7 @@ public class DataService {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				System.out.println(recommendedlocalNews);
-			} else {
-				System.out.println("no Use");
+
 			}
 		} else if (category.equals("WorldNews")) {
 			if (!fname.contentEquals("null") && !lname.contentEquals("null")) {
@@ -117,9 +114,7 @@ public class DataService {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				System.out.println(recommendedlocalNews);
-			} else {
-				System.out.println("no Use");
+
 			}
 
 		} else if (category.equals("PoliticsNews")) {
@@ -128,18 +123,36 @@ public class DataService {
 					recommendedLocalNewsList = new NewsManager().getrecommendedPoliticsNews(fname, lname, category);
 					Gson gson = new Gson();
 					recommendedlocalNews = gson.toJson(recommendedLocalNewsList);
-
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				System.out.println(recommendedlocalNews);
-			} else {
-				System.out.println("no Use");
-			}
 
+			}
 		}
 
 		return recommendedlocalNews;
+	}
+
+	@POST
+	@Path("recommendslist")
+	@Produces("application/json")
+	public String recommendationList(@FormParam("fname") String fname, @FormParam("lname") String lname) {
+		String search = null;
+		ArrayList<LocalNews> searchNewsList = new ArrayList<LocalNews>();
+		try {
+			search = new NewsManager().getRecommendationList(fname, lname);
+			if(search.equalsIgnoreCase("LocalNews")){
+				searchNewsList = new NewsManager().getrecommends();
+				Gson gson = new Gson();
+				search = gson.toJson(searchNewsList);
+				
+			}
+			System.out.println(search);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return search;
 	}
 
 }
