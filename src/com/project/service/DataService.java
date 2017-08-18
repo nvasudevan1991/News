@@ -42,7 +42,7 @@ public class DataService {
 			worldNewsList = new NewsManager().getWorldNews(logoutDetailTime);
 			Gson gson = new Gson();
 			worldNews = gson.toJson(worldNewsList);
-
+			System.out.println(worldNews);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -54,12 +54,13 @@ public class DataService {
 	@Produces("application/json")
 	public String sportsNewsData(@FormParam("logoutDetailTime") String logoutDetailTime) {
 		String sportsNews = null;
+		System.out.println(logoutDetailTime);
 		ArrayList<LocalNews> sportsNewsList = new ArrayList<LocalNews>();
 		try {
 			sportsNewsList = new NewsManager().getsportsNews(logoutDetailTime);
 			Gson gson = new Gson();
 			sportsNews = gson.toJson(sportsNewsList);
-
+			System.out.println(sportsNews);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

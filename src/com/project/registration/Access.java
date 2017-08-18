@@ -70,10 +70,13 @@ public class Access {
 		ResultSet rs = null;
 		System.out.println(logoutDetailTime);
 		if (!logoutDetailTime.isEmpty()) {
-			localnewsQueryCustomer = "SELECT * FROM newsdata WHERE Category = ? AND date > 'logoutDetailTime' ORDER BY `newsdata`.`date` DESC LIMIT 5";
+			localnewsQueryCustomer = "SELECT * FROM newsdata WHERE Category = ? AND date > ? ORDER BY `newsdata`.`date` DESC LIMIT 5";
 			PreparedStatement stmt1 = con.prepareStatement(localnewsQueryCustomer);
 			stmt1.setString(1, "LocalNews");
+			stmt1.setString(2, logoutDetailTime);
+			System.out.println(stmt1);
 			rs = stmt1.executeQuery();
+			
 		} else if (logoutDetailTime.isEmpty()) {
 			localnewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC ";
 			PreparedStatement stmt = con.prepareStatement(localnewsQuery);
@@ -105,11 +108,14 @@ public class Access {
 		String sportsnewsQuery = null;
 		ArrayList<LocalNews> sportsNewsList = new ArrayList<LocalNews>();
 		sportsNewsList.clear();
+		System.out.println(logoutDetailTime);
 		ResultSet rs = null;
 		if (!logoutDetailTime.isEmpty()) {
-			sportsnewsQueryCustomer = "SELECT * FROM newsdata WHERE Category = ? AND date > 'logoutDetailTime' ORDER BY `newsdata`.`date` DESC LIMIT 5";
+			sportsnewsQueryCustomer = "SELECT * FROM newsdata WHERE Category = ? AND date > ? ORDER BY `newsdata`.`date` DESC LIMIT 5";
 			PreparedStatement stmt1 = con.prepareStatement(sportsnewsQueryCustomer);
 			stmt1.setString(1, "PoliticsNews");
+			stmt1.setString(2, logoutDetailTime);
+			System.out.println(stmt1);
 			rs = stmt1.executeQuery();
 		} else if (logoutDetailTime.isEmpty()) {
 			sportsnewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC ";
@@ -141,12 +147,15 @@ public class Access {
 		String worldnewsQuery = null;
 		ArrayList<LocalNews> worldNewsList = new ArrayList<LocalNews>();
 		worldNewsList.clear();
+		System.out.println(logoutDetailTime);
 		ResultSet rs = null;
 		if (!logoutDetailTime.isEmpty()) {
-			worldnewsQueryCustomer = "SELECT * FROM newsdata WHERE Category = ? AND date > 'logoutDetailTime' ORDER BY `newsdata`.`date` DESC LIMIT 5";
+			worldnewsQueryCustomer = "SELECT * FROM newsdata WHERE Category = ? AND date > ? ORDER BY `newsdata`.`date` DESC LIMIT 5";
 			PreparedStatement stmt1 = con.prepareStatement(worldnewsQueryCustomer);
 			stmt1.setString(1, "WorldNews");
+			stmt1.setString(2, logoutDetailTime);
 			rs = stmt1.executeQuery();
+			System.out.println(stmt1);
 		} else if (logoutDetailTime.isEmpty()) {
 			worldnewsQuery = "SELECT * FROM newsdata WHERE Category = ? ORDER BY `newsdata`.`date` DESC ";
 			PreparedStatement stmt = con.prepareStatement(worldnewsQuery);
@@ -200,8 +209,6 @@ public class Access {
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, fname.toString());
 		stmt.setString(2, lname.toString());
-		
-		System.out.println(stmt);
 		stmt.executeUpdate();
 	return recommenedLocalNewsList;
 	}
@@ -211,8 +218,6 @@ public class Access {
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, fname.toString());
 		stmt.setString(2, lname.toString());
-		
-		System.out.println(stmt);
 		stmt.executeUpdate();
 	return recommenedLocalNewsList;
 	}
@@ -222,8 +227,6 @@ public class Access {
 		PreparedStatement stmt = con.prepareStatement(query);
 		stmt.setString(1, fname.toString());
 		stmt.setString(2, lname.toString());
-		
-		System.out.println(stmt);
 		stmt.executeUpdate();
 	return recommenedLocalNewsList;
 	}
